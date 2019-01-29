@@ -1,0 +1,16 @@
+version: "3"
+services:
+  foodbag:
+    build: '.'
+    ports:
+      - 8080:8080
+      - 5005:5005
+  foodbagdb:
+    image: mariadb
+    build: './mariadb'
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    command: ["mysqld",
+        "--skip-name-resolve"]
