@@ -9,5 +9,5 @@ Goal is to create an app which keeps track of a weekly diet.
 
 #### With docker:
 /mvnw clean package
-docker build -t hello .
-docker run -p 8080:8080 hello
+docker build -t foodbag .
+docker run -p 8080:8080 foodbag
