@@ -53,12 +53,13 @@ public class SessionFactory {
   }
 
   /** Hibernate asetukset JPA:lle */
+
   @Bean
   private static Properties jpaProperties() {
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDB103Dialect");
     hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "validate");
-    hibernateProperties.setProperty("hibernate.show_sql", "true");
     return hibernateProperties;
   }
+
 }
