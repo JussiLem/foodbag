@@ -13,9 +13,9 @@ public class Food {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long foodId;
+  private long id;
 
-  @Column(name = "name", columnDefinition = "TEXT")
+  @Column(name = "name")
   private String name;
 
   @Column(name = "comment", columnDefinition = "TEXT")
@@ -26,8 +26,11 @@ public class Food {
   @Column(name = "price", columnDefinition = "DOUBLE")
   private Currency price;
 
+  @Column(name = "userId")
+  private Long userId;
+
   public Food(long foodId, String name) {
-    this.foodId = foodId;
+    this.id = foodId;
     this.name = name;
   }
 }

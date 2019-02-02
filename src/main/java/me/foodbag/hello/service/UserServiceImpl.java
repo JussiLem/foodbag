@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -18,11 +17,11 @@ public class UserServiceImpl implements UserService {
 
   @Autowired private RoleRepository roleRepository;
 
-    private List<String> users;
+  private List<String> users;
 
   @Override
   @Transactional
-  public User registerNewUserAccount(final User account) throws FoodBagException {
+  public User registerNewUserAccount(final User account) {
     if (emailExists(account.getMailAddress())) {
       throw new FoodBagException(
           "User already exists with that email address:" + account.getMailAddress());
@@ -30,15 +29,18 @@ public class UserServiceImpl implements UserService {
     final User user = new User();
     user.setFirstName(account.getFirstName());
     user.setLastName(account.getLastName());
+    user.setUsername(account.getUsername());
     user.setPassword(account.getPassword());
     user.setBirthDay(account.getBirthDay());
-    user.setRoles(Collections.singletonList(roleRepository.findByName("roles")));
+    user.setMailAddress(account.getMailAddress());
+    user.setGender(account.getGender());
+    user.setRole(account.getRole());
     return userRepository.save(user);
   }
 
   @Override
   public String getUser(final User user) {
-    return user.getUserAccount();
+    return user.getUsername();
   }
 
     @Override

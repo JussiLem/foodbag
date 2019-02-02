@@ -15,5 +15,5 @@ public interface FoodRepository extends CrudRepository<Food, Long> {
   @Override
   List<Food> findAll();
 
-  Collection<Food> findByUser(String username);
+//  Collection<Food> find(String username);
 }

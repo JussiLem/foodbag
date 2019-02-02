@@ -4,6 +4,7 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -15,7 +16,8 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories("me.foodbag.hello.persistence.repository")
+@ComponentScan
+@EnableJpaRepositories(basePackages = "me.foodbag.hello.persistence.repository")
 @EnableTransactionManagement
 public class SessionFactory {
   private static final Config config = ConfigFactory.load().getConfig("database");
@@ -44,7 +46,7 @@ public class SessionFactory {
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(dataSource());
-    em.setPackagesToScan("me.foodbag.hello.persistence.domainobject");
+    em.setPackagesToScan("me.foodbag.hello.persistence");
     em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
     em.setJpaProperties(jpaProperties());
     return em;

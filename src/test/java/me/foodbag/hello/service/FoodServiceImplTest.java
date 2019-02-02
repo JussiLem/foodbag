@@ -51,7 +51,7 @@ class FoodServiceImplTest {
     Mockito.when(foodRepository.findByName(rice.getName())).thenReturn(rice);
     Mockito.when(foodRepository.findByName(spagetti.getName())).thenReturn(spagetti);
     Mockito.when(foodRepository.findByName("wrong name")).thenReturn(null);
-    Mockito.when(foodRepository.findById(rice.getFoodId())).thenReturn(Optional.of(rice));
+    Mockito.when(foodRepository.findById(rice.getId())).thenReturn(Optional.of(rice));
     Mockito.when(foodRepository.findAll()).thenReturn(allFoods);
     Mockito.when(foodRepository.findById(-99L)).thenReturn(Optional.empty());
 
