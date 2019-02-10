@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>7bad05bc-11b3-4273-9612-f1271ae80e3d.SCHEMA:foods</OriginalElement>
+  <nodes>
+    <node x="235.00000000000006" y="298.0">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.PasswordResetToken</node>
+    <node x="340.0" y="471.0">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.food</node>
+    <node x="470.00000000000006" y="322.5">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.user_role</node>
+    <node x="556.0" y="84.0">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.roles</node>
+    <node x="218.50000000000006" y="0.0">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.users</node>
+    <node x="0.0" y="471.0">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.hibernate_sequence</node>
+    <node x="692.25" y="322.5">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.roles_privileges</node>
+    <node x="757.0" y="84.0">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.Privilege</node>
+    <node x="0.0" y="298.0">7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.VerificationToken</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.user_role" target="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.users">
+      <point x="-43.75" y="-39.5" />
+      <point x="513.75" y="273.0" />
+      <point x="425.16666666666674" y="273.0" />
+      <point x="82.66666666666669" y="124.0" />
+    </edge>
+    <edge source="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.user_role" target="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.roles">
+      <point x="43.75" y="-39.5" />
+      <point x="-45.25" y="40.0" />
+    </edge>
+    <edge source="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.roles_privileges" target="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.Privilege">
+      <point x="51.75" y="-39.5" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.VerificationToken" target="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.users">
+      <point x="0.0" y="-64.0" />
+      <point x="107.5" y="273.0" />
+      <point x="259.83333333333337" y="273.0" />
+      <point x="-82.66666666666669" y="124.0" />
+    </edge>
+    <edge source="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.PasswordResetToken" target="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.users">
+      <point x="0.0" y="-64.0" />
+      <point x="0.0" y="124.0" />
+    </edge>
+    <edge source="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.roles_privileges" target="7bad05bc-11b3-4273-9612-f1271ae80e3d.TABLE:foods.roles">
+      <point x="-51.75" y="-39.5" />
+      <point x="744.0" y="273.0" />
+      <point x="691.75" y="273.0" />
+      <point x="45.25" y="40.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9342379958246346" x="450.4368715083799" y="347.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+
