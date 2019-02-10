@@ -26,11 +26,13 @@ public class Food {
   @Column(name = "price", columnDefinition = "DOUBLE")
   private Currency price;
 
-  @Column(name = "userId")
-  private Long userId;
-
-  public Food(long foodId, String name) {
-    this.id = foodId;
+  /**
+   * Constructor for the mock tests. If changed then mocks will fail.
+   * @param id food id
+   * @param name name of the food
+   */
+  public Food(long id, String name) {
+    this.id = id;
     this.name = name;
   }
 }
