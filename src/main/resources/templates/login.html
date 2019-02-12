@@ -22,11 +22,11 @@
     <div class="row wrapper">
         <h1 th:text="#{label.form.loginTitle}">Header</h1>
         <a href="?lang=en" th:text="#{label.form.loginEnglish}">login</a>
-        <a href="?lang=fi" th:text="#{label.form.loginFinnish}">login</a>
+        <a href="?lang=fi_FI" th:text="#{label.form.loginFinnish}">login</a>
     </div>
     <br/>
 
-    <form name="f" action="/login" method="post" onsubmit="return validate();">
+    <form name="f" action="/loggedUser" method="post" onsubmit="return validate();">
         <span id="welcometext">&nbsp;</span>
 
         <label class="col-sm-4" th:text="#{label.form.loginEmail}">Email</label>
@@ -40,7 +40,8 @@
         <input class="btn btn-primary" name="submit" type="submit" th:value="#{label.form.submit}"/>
     </form>
 
-    <p>Current locale: <span th:text="${#locale}"></span></p>
+    <br/> Current Locale :  <span th:text="${#locale}"></span><br/><br/>
+    <a class="btn btn-default" th:href="@{/registration.html}" th:text="#{label.form.loginSignUp}">signup</a>
 
 </div>
 </body>
