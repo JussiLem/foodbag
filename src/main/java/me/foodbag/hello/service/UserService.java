@@ -1,6 +1,7 @@
 package me.foodbag.hello.service;
 
 import me.foodbag.hello.persistence.model.User;
+import me.foodbag.hello.persistence.model.VerificationToken;
 import me.foodbag.hello.web.exception.FoodBagException;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public interface UserService {
    */
   User registerNewUserAccount(User user) throws FoodBagException;
 
-  String getUser(User name);
+  User getUser(String verificationToken);
 
   List<String> getAllUsers();
 
@@ -35,4 +36,12 @@ public interface UserService {
   boolean checkIfValidPassword(User user, String password);
 
   List<String> getUserFromSessionRegistry();
+
+  User findByUsername(String username);
+
+    VerificationToken generateNewVerificationToken(String token);
+
+  String validateVerificationToken(String token);
+
+    void createPasswordResetTokenForUser(User user, String token);
 }

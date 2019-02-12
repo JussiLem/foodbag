@@ -58,7 +58,7 @@ public class SessionFactory {
   private static Properties jpaProperties() {
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDB103Dialect");
-    hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "validate");
+    hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
     return hibernateProperties;
   }
 

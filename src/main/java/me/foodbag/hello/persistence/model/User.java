@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-
+import java.util.Collection;
 
 /** User taulun tietue / peruskäyttäjä */
 @Data
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Table(name = "users")
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
   @Size(min = 1)
@@ -41,8 +41,10 @@ public class User {
 
   private boolean enabled;
 
-  @OneToOne
-  @JoinColumn(name = "roleId")
-  private Role role;
-
+  @ManyToMany
+  @JoinTable(
+      name = "user_role",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id"))
+  private Collection<Role> role;
 }
