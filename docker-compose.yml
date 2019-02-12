@@ -1,11 +1,22 @@
 version: "3"
 services:
+  jenkins:
+    image: jenkinsci/blueocean
+    user: root
+    ports:
+      - 8080:8080
+      - 8443:8443
+      - 50000:50000
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+      - /home:/home
+      - /var/run/docker.sock:/var/run/docker.sock
   foodbag:
     build: '.'
     depends_on:
       - foodbagdb
     ports:
-      - 8080:8080
+      - 8085:8085
       - 5005:5005
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mariadb://foodbagdb:3306/foods&characterEncoding=utf8&useSSL=false
