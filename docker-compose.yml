@@ -18,6 +18,7 @@ services:
     ports:
       - 8085:8085
       - 5005:5005
+      - 35729:35729
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mariadb://foodbagdb:3306/foods&characterEncoding=utf8&useSSL=false
   foodbagdb:
