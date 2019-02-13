@@ -24,6 +24,10 @@ public class PasswordResetToken {
 
   private Date expiryDate;
 
+  public PasswordResetToken() {
+    super();
+  }
+
   public PasswordResetToken(final String token, final User user) {
     super();
 

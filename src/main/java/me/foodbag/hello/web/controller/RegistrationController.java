@@ -5,7 +5,6 @@ import me.foodbag.hello.persistence.model.Privilege;
 import me.foodbag.hello.persistence.model.Role;
 import me.foodbag.hello.persistence.model.User;
 import me.foodbag.hello.persistence.model.VerificationToken;
-import me.foodbag.hello.registration.OnRegistrationCompleteEvent;
 import me.foodbag.hello.registration.RegistrationEvent;
 import me.foodbag.hello.security.PasswordValid;
 import me.foodbag.hello.security.UserValidator;
@@ -52,7 +51,7 @@ public class RegistrationController {
 
     final User registered = userService.registerNewUserAccount(accountDto);
     eventPublisher.publishEvent(
-        new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+        new RegistrationEvent(registered, request.getLocale(), getAppUrl(request)));
     return new GenericResponse("success");
   }
 

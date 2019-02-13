@@ -39,9 +39,11 @@ public interface UserService {
 
   User findByUsername(String username);
 
-    VerificationToken generateNewVerificationToken(String token);
+  VerificationToken generateNewVerificationToken(String token);
 
   String validateVerificationToken(String token);
 
-    void createPasswordResetTokenForUser(User user, String token);
+  void createPasswordResetTokenForUser(User user, String token);
+
+  void createVerificationTokenForUser(User user, String token);
 }

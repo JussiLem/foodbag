@@ -135,6 +135,13 @@ public class UserServiceImpl implements UserService {
     passwordTokenRepository.save(myToken);
   }
 
+  @Override
+  public void createVerificationTokenForUser(final User user, final String token) {
+    final VerificationToken token1 = new VerificationToken(token, user);
+    tokenRepository.save(token1);
+
+  }
+
   private boolean emailExists(final String email) {
     return userRepository.findByMailAddress(email) != null;
   }

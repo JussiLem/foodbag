@@ -28,17 +28,18 @@ public class MvcConf implements WebMvcConfigurer {
   private MessageSource messageSource;
 
     // Overrided methods
-  /*
+
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/").setViewName("forward:/login");
-    registry.addViewController("/login").setViewName("login");
-    registry.addViewController("/home.html").setViewName("home");
-    registry.addViewController("/registration.html").setViewName("registration");
-    registry.addViewController("/console.html").setViewName("console");
+    registry.addViewController("/login");
+    registry.addViewController("/home.html");
+    registry.addViewController("/registration.html");
+    registry.addViewController("/console.html");
+    registry.addViewController("/invalidSession.html");
   }
 
-  */
+
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {

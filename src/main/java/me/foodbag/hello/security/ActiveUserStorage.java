@@ -6,7 +6,8 @@ import java.util.List;
 /** Palauttaa aktiivisena olevan käyttäjän */
 public class ActiveUserStorage {
 
-  public List<String> users;
+  private List<String> users;
+
 
   public ActiveUserStorage() {
     users = new ArrayList<>();
@@ -19,4 +20,6 @@ public class ActiveUserStorage {
   public void setUsers(List<String> users) {
     this.users = users;
   }
+
+
 }
