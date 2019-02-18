@@ -23,75 +23,77 @@ import java.util.List;
 @Transactional
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired private UserRepository userRepository;
 
-    @Autowired
-    private HttpServletRequest httpServletRequest;
+  @Autowired private HttpServletRequest httpServletRequest;
 
+  public MyUserDetailsService() {
+    super();
+  }
 
-    public MyUserDetailsService() {
-        super();
+  @Override
+  public UserDetails loadUserByUsername(final String s) throws UsernameNotFoundException {
+    final String ip = getClientIp();
+    // if ()    //TODO IP tarkistus
+
+    try {
+      final User user = userRepository.findByMailAddress(s);
+      if (user == null) {
+        throw new UsernameNotFoundException("There was no user found with username" + s);
+      }
+      return new org.springframework.security.core.userdetails.User(
+          user.getMailAddress(),
+          user.getPassword(),
+          user.isEnabled(),
+          true,
+          true,
+          true,
+          getAuthorities(user.getRoles()));
+
+    } catch (RuntimeException e) {
+      throw new FoodBagException(e);
     }
-    @Override
-    public UserDetails loadUserByUsername(final String s) throws UsernameNotFoundException {
-        final String ip = getClientIp();
-         //if ()    //TODO IP tarkistus
+  }
 
-        try{
-            final User user = userRepository.findByMailAddress(s);
-            if (user == null) {
-                throw new UsernameNotFoundException("There was no user found with username" + s);
-            }
-            return new org.springframework.security.core.userdetails.User(user.getMailAddress(), user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
+  /* UTILS for custom user detail service*/
 
-        } catch (RuntimeException e) {
-            throw new FoodBagException(e);
-        }
+  /**
+   * Kun käyttäjä on autentikoinut, getAuthorities() "kansoitetaan" oliona
+   *
+   * @param roles
+   * @return UserDetails palautetaan
+   */
+  private Collection<? extends GrantedAuthority> getAuthorities(final Collection<Role> roles) {
+    return getGrantedAuthorities(getPrivileges(roles));
+  }
+
+  private List<String> getPrivileges(final Collection<Role> roles) {
+    final List<String> privileges = new ArrayList<>();
+    final List<Privilege> collection = new ArrayList<>();
+
+    for (final Role role : roles) {
+      collection.addAll(role.getPrivileges());
     }
-
-    /* UTILS for custom user detail service*/
-
-    /**
-     * Kun käyttäjä on autentikoinut, getAuthorities() "kansoitetaan"
-     * oliona
-     * @param roles
-     * @return UserDetails palautetaan
-     */
-    private Collection<? extends GrantedAuthority> getAuthorities(final Collection<Role> roles) {
-        return getGrantedAuthorities(getPrivileges(roles));
+    for (final Privilege item : collection) {
+      privileges.add(item.getName());
     }
+    return privileges;
+  }
 
+  private List<GrantedAuthority> getGrantedAuthorities(final List<String> privileges) {
+    final List<GrantedAuthority> authorities = new ArrayList<>();
 
-
-    private List<String> getPrivileges(final Collection<Role> roles) {
-        final List<String> privileges = new ArrayList<>();
-        final List<Privilege> collection = new ArrayList<>();
-
-        for (final Role role : roles) {
-            collection.addAll(role.getPrivileges());
-        }
-        for (final Privilege item : collection) {
-            privileges.add(item.getName());
-        }
-        return privileges;
+    for (final String privilege : privileges) {
+      authorities.add(new SimpleGrantedAuthority(privilege));
     }
+    return authorities;
+  }
 
-    private List<GrantedAuthority>  getGrantedAuthorities(final List<String> privileges) {
-        final List<GrantedAuthority> authorities = new ArrayList<>();
-
-        for (final String privilege : privileges) {
-            authorities.add(new SimpleGrantedAuthority(privilege));
-        }
-        return authorities;
+  private String getClientIp() {
+    final String xfHeader = httpServletRequest.getHeader("X-Forwarded-For");
+    if (xfHeader == null) {
+      return httpServletRequest.getRemoteAddr();
     }
-
-
-    private String getClientIp() {
-        final String xfHeader = httpServletRequest.getHeader("X-Forwarded-For");
-        if (xfHeader == null) {
-            return httpServletRequest.getRemoteAddr();
-        }
-        return xfHeader.split(".")[0];
-    }
+    return xfHeader.split(".")[0];
+  }
 }

@@ -1,4 +1,4 @@
-package me.foodbag.hello.util;
+package me.foodbag.hello.web.util;
 
 import java.util.List;
 import java.util.stream.Collectors;

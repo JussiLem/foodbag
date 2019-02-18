@@ -2,10 +2,12 @@ package me.foodbag.hello.service;
 
 import me.foodbag.hello.persistence.model.User;
 import me.foodbag.hello.persistence.model.VerificationToken;
+import me.foodbag.hello.web.dto.UserDto;
 import me.foodbag.hello.web.exception.FoodBagException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Peruskäyttäjille luotu service luokka, Vastuussa esim. tilin luomisesta ja tarvittavan logiikan
@@ -21,11 +23,9 @@ public interface UserService {
    * @return palauttaa uuden käyttäjän
    * @throws FoodBagException jos tulee poikkeuksia
    */
-  User registerNewUserAccount(User user) throws FoodBagException;
+  User registerNewUserAccount(UserDto user) throws FoodBagException;
 
   User getUser(String verificationToken);
-
-  List<String> getAllUsers();
 
   void deleteUser(User user);
 
@@ -33,11 +33,9 @@ public interface UserService {
 
   void changeUserPassword(User user, String password);
 
-  boolean checkIfValidPassword(User user, String password);
+  boolean checkIfValidOldPassword(User user, String password);
 
-  List<String> getUserFromSessionRegistry();
-
-  User findByUsername(String username);
+  VerificationToken getVerificationToken(String verificationToken);
 
   VerificationToken generateNewVerificationToken(String token);
 
@@ -46,4 +44,10 @@ public interface UserService {
   void createPasswordResetTokenForUser(User user, String token);
 
   void createVerificationTokenForUser(User user, String token);
+
+  String validatePasswordResetToken(long id, String token);
+
+  Optional<User> getUserById(long id);
+
+  List<String> getUsersFromSessionRegistry();
 }

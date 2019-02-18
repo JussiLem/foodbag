@@ -1,5 +1,6 @@
 package me.foodbag.hello.spring;
 
+import me.foodbag.hello.validation.password.PasswordMatchesValidator;
 import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -24,10 +25,13 @@ import java.util.Locale;
 @EnableWebMvc
 public class MvcConf implements WebMvcConfigurer {
 
-  @Autowired @Lazy
-  private MessageSource messageSource;
+  public MvcConf() {
+    super();
+  }
 
-    // Overrided methods
+  @Autowired @Lazy private MessageSource messageSource;
+
+  // Overrided methods
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
@@ -37,42 +41,53 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addViewController("/registration.html");
     registry.addViewController("/console.html");
     registry.addViewController("/invalidSession.html");
+    registry.addViewController("/homepage.html");
+    registry.addViewController("/error.html");
   }
 
-
+  @Override
+  public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+    configurer.enable();
+  }
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/resources/**").addResourceLocations("/", "/resources");
   }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-        localeChangeInterceptor.setParamName("lang");
-        registry.addInterceptor(localeChangeInterceptor);
-    }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+    localeChangeInterceptor.setParamName("lang");
+    registry.addInterceptor(localeChangeInterceptor);
+  }
 
-    @Bean
-    public LocaleResolver localeResolver() {
-      final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-      cookieLocaleResolver.setDefaultLocale(Locale.getDefault());
-      return cookieLocaleResolver;
-    }
+  @Bean
+  public LocaleResolver localeResolver() {
+    final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+    cookieLocaleResolver.setDefaultLocale(Locale.getDefault());
+    return cookieLocaleResolver;
+  }
 
-   @Bean
+  @Bean
   public MessageSource messageSource() {
-  final ReloadableResourceBundleMessageSource messageSources = new ReloadableResourceBundleMessageSource();
-     messageSources.setBasename("classpath:messages");
-     messageSources.setUseCodeAsDefaultMessage(true);
-     messageSources.setDefaultEncoding("UTF-8");
-     messageSources.setCacheSeconds(0);
-  return messageSources;
+    final ReloadableResourceBundleMessageSource messageSources =
+        new ReloadableResourceBundleMessageSource();
+    messageSources.setBasename("classpath:messages");
+    messageSources.setUseCodeAsDefaultMessage(true);
+    messageSources.setDefaultEncoding("UTF-8");
+    messageSources.setCacheSeconds(0);
+    return messageSources;
   }
 
   @Bean
   public EmailValidator usernameValidator() {
     return new EmailValidator();
+  }
+
+  @Bean
+  PasswordMatchesValidator passwordMatchesValidator() {
+    return new PasswordMatchesValidator();
   }
 
   @Bean

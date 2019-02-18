@@ -1,4 +1,4 @@
-package me.foodbag.hello.security;
+package me.foodbag.hello.security.authentication;
 
 import me.foodbag.hello.persistence.model.User;
 import me.foodbag.hello.persistence.repository.UserRepository;
@@ -8,8 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Component;
 
-public class AuthenticationProvider extends DaoAuthenticationProvider {
+// @Component
+public class FoodBagAuthenticationProvider extends DaoAuthenticationProvider {
 
   @Autowired private UserRepository userRepository;
 
@@ -17,9 +19,8 @@ public class AuthenticationProvider extends DaoAuthenticationProvider {
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     final User user = userRepository.findByMailAddress(authentication.getName());
     if (user == null) {
-      throw new FoodBagException("Invalid username or password");
+      throw new FoodBagException("Invalid username or password!");
     }
-
     final Authentication result = super.authenticate(authentication);
     return new UsernamePasswordAuthenticationToken(
         user, result.getCredentials(), result.getAuthorities());

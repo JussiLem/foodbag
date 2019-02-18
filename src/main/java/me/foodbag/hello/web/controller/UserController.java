@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping(value = "/loggedUsersFromSessionRegistry")
     public String getLoggedUsersFromRegistry(final Locale locale, final Model model) {
-        model.addAttribute("users", userService.getUserFromSessionRegistry());
+        model.addAttribute("users", userService.getUsersFromSessionRegistry());
         return "users";
     }
 

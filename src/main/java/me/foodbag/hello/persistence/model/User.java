@@ -1,54 +1,44 @@
 package me.foodbag.hello.persistence.model;
 
 import lombok.Data;
+import org.jboss.aerogear.security.otp.api.Base32;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.Collection;
 
-/** User taulun tietue / peruskäyttäjä */
+/** User taulun tietue / sisältää peruskäyttäjät ja pääkäyttäjien tiedot */
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "user_account")
 public class User {
   @Id
+  @Column(unique = true, nullable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
-  @Size(min = 1)
-  @Column(name = "first_name")
   private String firstName;
 
-  @Size(min = 1)
-  @Column(name = "last_name")
   private String lastName;
 
-  @Size(min = 1)
-  private String username;
-
-  private String gender;
-
-  private LocalDate birthDay;
-
-  @Size(min = 1)
-  @Column(name = "email_address")
   private String mailAddress;
 
-  @Size(min = 1)
-  @Column(name = "user_password")
+  @Column(length = 60)
   private String password;
 
   private boolean enabled;
 
-  @ManyToMany
-  @JoinTable(
-      name = "user_role",
-      joinColumns = @JoinColumn(name = "user_id"),
-      inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Collection<Role> role;
+  private String secret;
 
-  public Collection<Role> getRoles() {
-    return role;
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "users_roles",
+      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+  private Collection<Role> roles;
+
+  public User() {
+    super();
+    this.secret = Base32.random();
+    this.enabled = false;
   }
 }

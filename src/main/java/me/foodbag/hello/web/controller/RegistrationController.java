@@ -6,29 +6,22 @@ import me.foodbag.hello.persistence.model.Role;
 import me.foodbag.hello.persistence.model.User;
 import me.foodbag.hello.persistence.model.VerificationToken;
 import me.foodbag.hello.registration.RegistrationEvent;
-import me.foodbag.hello.security.PasswordValid;
-import me.foodbag.hello.security.UserValidator;
 import me.foodbag.hello.service.UserService;
-import me.foodbag.hello.util.GenericResponse;
+import me.foodbag.hello.web.util.GenericResponse;
+import me.foodbag.hello.web.dto.PasswordDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
-import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -106,23 +99,25 @@ public class RegistrationController {
     return new GenericResponse(
         messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
   }
-  /*
+
   @GetMapping(value = "/user/changePassword")
-  public String showChangePasswordPage(final Locale locale, final Model model, @RequestParam("id") final long id, @RequestParam("token") final String token) {
-      final String result = securityUserService.validatePasswordResetToken(id, token);
-      if (result != null) {
-          model.addAttribute("message", messages.getMessage("auth.message." + result, null, locale));
-          return "redirect:/login?lang=" + locale.getLanguage();
-      }
-      return "redirect:/updatePassword.html?lang=" + locale.getLanguage();
+  public String showChangePasswordPage(
+      final Locale locale,
+      final Model model,
+      @RequestParam("id") final long id,
+      @RequestParam("token") final String token) {
+    final String result = userService.validatePasswordResetToken(id, token);
+    if (result != null) {
+      model.addAttribute("message", messages.getMessage("auth.message." + result, null, locale));
+      return "redirect:/login?lang=" + locale.getLanguage();
+    }
+    return "redirect:/updatePassword.html?lang=" + locale.getLanguage();
   }
 
-  */
-
   @PostMapping(value = "/user/savePassword")
-  public GenericResponse savePassword(final Locale locale, @Valid PasswordValid passwordDto) {
+  public GenericResponse savePassword(final Locale locale, @Valid PasswordDto passwordDao) {
     final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    userService.changeUserPassword(user, passwordDto.getNewPassword());
+    userService.changeUserPassword(user, passwordDao.getNewPassword());
     return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
   }
   /*
@@ -149,7 +144,7 @@ public class RegistrationController {
   private void authWithoutPassword(User user) {
     List<Privilege> privileges = new ArrayList<>();
     Set<Privilege> uniqueValues = new HashSet<>();
-    for (Role role : user.getRole()) {
+    for (Role role : user.getRoles()) {
       Collection<Privilege> rolePrivileges = role.getPrivileges();
       for (Privilege privilege : rolePrivileges) {
         if (uniqueValues.add(privilege)) {

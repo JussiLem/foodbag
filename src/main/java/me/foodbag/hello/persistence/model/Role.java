@@ -6,7 +6,6 @@ import java.util.Collection;
 
 @Data
 @Entity
-@Table(name = "roles")
 public class Role {
 
   @Id
@@ -16,7 +15,7 @@ public class Role {
 
   private String name;
 
-  @ManyToMany(mappedBy = "role")
+  @ManyToMany(mappedBy = "roles")
   private Collection<User> users;
 
   @ManyToMany
@@ -25,4 +24,13 @@ public class Role {
       joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
   private Collection<Privilege> privileges;
+
+  public Role(final String name) {
+    super();
+    this.name = name;
+  }
+
+  public Role() {
+    super();
+  }
 }
