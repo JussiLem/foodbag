@@ -20,7 +20,7 @@ public class User {
 
   private String lastName;
 
-  private String mailAddress;
+  private String email;
 
   @Column(length = 60)
   private String password;

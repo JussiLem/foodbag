@@ -38,6 +38,7 @@ public class UserIntegrationTest {
     private static final String firstName = "Teppo";
     private static final String lastName = "Testaaja";
 
+
     /**
      * Ennen testiä luodaan tietokantaan käyttäjä
      * @throws FoodBagException jos tapahtuu poikkeuksia
@@ -45,7 +46,7 @@ public class UserIntegrationTest {
     @BeforeEach
     public void givenUserAndVerificationToken() throws FoodBagException {
         User user = new User();
-        user.setMailAddress(mailAddress);
+        user.setEmail(mailAddress);
         user.setPassword(testPassword);
         user.setFirstName(firstName);
         user.setLastName(lastName);

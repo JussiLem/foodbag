@@ -43,6 +43,8 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addViewController("/invalidSession.html");
     registry.addViewController("/homepage.html");
     registry.addViewController("/error.html");
+    registry.addViewController("/successRegister.html");
+    registry.addViewController("/users.html");
   }
 
   @Override

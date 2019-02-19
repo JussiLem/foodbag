@@ -48,14 +48,14 @@ public class FoodBagAuthenticationSuccessHandler implements AuthenticationSucces
 
       String username;
       if (authentication.getPrincipal() instanceof User) {
-        username = ((User) authentication.getPrincipal()).getMailAddress();
+        username = ((User) authentication.getPrincipal()).getEmail();
       } else {
         username = authentication.getName();
       }
       LoggedUser loggedUser = new LoggedUser(username, activeUserStorage);
       session.setAttribute("user", loggedUser);
     }
-    ClearAuthAttributes(httpServletRequest);
+    clearAuthAttributes(httpServletRequest);
   }
 
   private void handle(
@@ -89,7 +89,7 @@ public class FoodBagAuthenticationSuccessHandler implements AuthenticationSucces
     if (isUser) {
       String username;
       if (auth.getPrincipal() instanceof User) {
-        username = ((User) auth.getPrincipal()).getMailAddress();
+        username = ((User) auth.getPrincipal()).getEmail();
       } else {
         username = auth.getName();
       }
@@ -102,7 +102,7 @@ public class FoodBagAuthenticationSuccessHandler implements AuthenticationSucces
     }
   }
 
-  private void ClearAuthAttributes(final HttpServletRequest request) {
+  private void clearAuthAttributes(final HttpServletRequest request) {
     final HttpSession session = request.getSession(false);
 
     if (session == null) {

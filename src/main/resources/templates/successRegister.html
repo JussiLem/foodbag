@@ -9,13 +9,11 @@
     <title th:text="#{label.pages.home.title}">home</title>
 </head>
 <body>
-<div>
-    <h1 class="alert alert-info" th:text="#{message.regSucc}">success</h1>
-    <br/>
-    <span th:if="${param.token != null}" th:text="#{token.message}">token</span>
-    <span th:text="${param.token}">token</span>
-    <br/>
-    <a class="btn btn-primary" th:href="@{/login}" th:text="#{label.login}">login</a>
-</div>
+<h1 class="alert alert-info" th:text="#{message.regSucc}">success</h1>
+<br/>
+<span th:if="${param.token != null}" th:text="#{token.message}">token</span>
+<span th:text="${param.token}">token</span>
+<br/>
+<a class="btn btn-primary" th:href="@{/login}" th:text="#{label.login}">login</a>
 </body>
 </html>

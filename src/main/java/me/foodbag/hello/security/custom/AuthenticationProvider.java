@@ -1,4 +1,4 @@
-package me.foodbag.hello.security;
+package me.foodbag.hello.security.custom;
 
 import me.foodbag.hello.persistence.model.User;
 import me.foodbag.hello.persistence.repository.UserRepository;
@@ -15,7 +15,7 @@ public class AuthenticationProvider extends DaoAuthenticationProvider {
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    final User user = userRepository.findByMailAddress(authentication.getName());
+    final User user = userRepository.findByEmail(authentication.getName());
     if (user == null) {
       throw new FoodBagException("Invalid username or password");
     }

@@ -7,9 +7,11 @@ import me.foodbag.hello.persistence.model.User;
 import me.foodbag.hello.persistence.model.VerificationToken;
 import me.foodbag.hello.registration.RegistrationEvent;
 import me.foodbag.hello.service.UserService;
+import me.foodbag.hello.web.dto.UserDto;
 import me.foodbag.hello.web.util.GenericResponse;
 import me.foodbag.hello.web.dto.PasswordDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,11 +37,12 @@ public class RegistrationController {
 
   @Autowired private ApplicationEventPublisher eventPublisher;
 
+
   // Registration
 
   @PostMapping(value = "/user/registration")
   public GenericResponse registerUserAccount(
-      @Valid final User accountDto, final HttpServletRequest request) {
+          @Valid final UserDto accountDto, final HttpServletRequest request) {
     log.debug("Registering user account with information: {}", accountDto);
 
     final User registered = userService.registerNewUserAccount(accountDto);
@@ -115,9 +118,9 @@ public class RegistrationController {
   }
 
   @PostMapping(value = "/user/savePassword")
-  public GenericResponse savePassword(final Locale locale, @Valid PasswordDto passwordDao) {
+  public GenericResponse savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
     final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    userService.changeUserPassword(user, passwordDao.getNewPassword());
+    userService.changeUserPassword(user, passwordDto.getNewPassword());
     return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
   }
   /*

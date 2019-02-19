@@ -35,4 +35,8 @@ public class Food {
     this.id = id;
     this.name = name;
   }
+
+  public Food() {
+    //for hibernate
+  }
 }

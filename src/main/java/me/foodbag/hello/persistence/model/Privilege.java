@@ -22,4 +22,8 @@ public class Privilege {
     super();
     this.name = name;
   }
+
+  public Privilege() {
+    // hibernate
+  }
 }

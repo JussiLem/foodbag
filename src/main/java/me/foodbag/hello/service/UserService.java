@@ -13,7 +13,6 @@ import java.util.Optional;
  * Peruskäyttäjille luotu service luokka, Vastuussa esim. tilin luomisesta ja tarvittavan logiikan
  * suorittamisesta käyttäjän rekisteröimiseksi.
  */
-@Service
 public interface UserService {
 
   /**

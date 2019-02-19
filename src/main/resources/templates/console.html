@@ -15,5 +15,23 @@
         </ul>
     </div>
 </nav>
+
+<div class="container">
+    <div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
+
+    <h1>This is the landing page for the admin</h1>
+
+    <div sec:authorize="hasAuthority('READ_PRIVILEGE')">This text is only visible to a user</div>
+
+    <div sec:authorize="hasAuthority('WRITE_PRIVILEGE')"> This text is only visible to an admin</div>
+
+    <a class="btn btn-default" th:href="@{/admin.html}" th:text="#{label.pages.admin}">admin</a>
+    <br/>
+
+    <br/>
+    <br/>
+    <br/>
+
+</div>
 </body>
 </html>

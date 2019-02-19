@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -20,6 +21,11 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "me.foodbag.hello.persistence.repository")
 @EnableTransactionManagement
 public class SessionFactory {
+
+  public SessionFactory() {
+    super();
+  }
+
   private static final Config config = ConfigFactory.load().getConfig("database");
   private static final String JDBC_URL_PATTERN = config.getString("host");
   private static final String DB_PASS = config.getString("password");
@@ -55,11 +61,15 @@ public class SessionFactory {
   /** Hibernate asetukset JPA:lle */
 
   @Bean
-  private static Properties jpaProperties() {
+  protected Properties jpaProperties() {
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDB103Dialect");
     hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
     return hibernateProperties;
   }
 
+  @Bean
+  public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+    return new PersistenceExceptionTranslationPostProcessor();
+  }
 }

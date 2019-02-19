@@ -37,12 +37,12 @@ public class MyUserDetailsService implements UserDetailsService {
     // if ()    //TODO IP tarkistus
 
     try {
-      final User user = userRepository.findByMailAddress(s);
+      final User user = userRepository.findByEmail(s);
       if (user == null) {
         throw new UsernameNotFoundException("There was no user found with username" + s);
       }
       return new org.springframework.security.core.userdetails.User(
-          user.getMailAddress(),
+          user.getEmail(),
           user.getPassword(),
           user.isEnabled(),
           true,

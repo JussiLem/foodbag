@@ -29,5 +29,5 @@ public class UserDto {
   @ValidEmail
   @NotNull
   @Size(min = 1, message = "{Size.userDto.email}")
-  private String mailAddress;
+  private String email;
 }

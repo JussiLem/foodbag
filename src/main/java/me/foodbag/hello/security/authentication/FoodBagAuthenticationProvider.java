@@ -8,7 +8,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.stereotype.Component;
 
 // @Component
 public class FoodBagAuthenticationProvider extends DaoAuthenticationProvider {
@@ -17,7 +16,7 @@ public class FoodBagAuthenticationProvider extends DaoAuthenticationProvider {
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    final User user = userRepository.findByMailAddress(authentication.getName());
+    final User user = userRepository.findByEmail(authentication.getName());
     if (user == null) {
       throw new FoodBagException("Invalid username or password!");
     }

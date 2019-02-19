@@ -1,8 +1,6 @@
 package me.foodbag.hello.spring;
 
 import com.google.common.collect.ImmutableList;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import me.foodbag.hello.persistence.model.Privilege;
 import me.foodbag.hello.persistence.model.Role;
 import me.foodbag.hello.persistence.model.User;
@@ -22,7 +20,6 @@ import java.util.*;
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-  private static final Config testConfig = ConfigFactory.load().getConfig("test");
   private boolean alreadySetup = false;
   private static final String READ_PRIVILEGE = "READ_PRIVILEGE";
   private static final String WRITE_PRIVILEGE = "WRITE_PRIVILEGE";
@@ -31,10 +28,10 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
   private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
   // Details for the test user
-  private static final String TEST_EMAIL = testConfig.getString("email");
-  private static final String FIRST_NAME = testConfig.getString("firstname");
-  private static final String LAST_NAME = testConfig.getString("lastname");
-  private static final String PASS = testConfig.getString("pass");
+  private static final String TEST_EMAIL = "test@test.com";
+  private static final String FIRST_NAME = "Test";
+  private static final String LAST_NAME = "Test";
+  private static final String PASS = "test";
 
   @Autowired private UserRepository userRepository;
 
@@ -70,7 +67,6 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     /* Create initial user */
     createUserIfNotFound(
         TEST_EMAIL, FIRST_NAME, LAST_NAME, PASS, new ArrayList<>(ImmutableList.of(adminRole)));
-
     alreadySetup = true;
   }
 
@@ -96,21 +92,23 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
   }
 
   @Transactional
-  public void createUserIfNotFound(
+  public User createUserIfNotFound(
       final String email,
       final String firstName,
       final String lastName,
       final String password,
       final Collection<Role> roles) {
-    User user = userRepository.findByMailAddress(email);
+    User user = userRepository.findByEmail(email);
     if (user == null) {
       user = new User();
       user.setFirstName(firstName);
       user.setLastName(lastName);
       user.setPassword(passwordEncoder.encode(password));
-      user.setMailAddress(email);
+      user.setEmail(email);
       user.setEnabled(true);
     }
     user.setRoles(roles);
+    user = userRepository.save(user);
+    return user;
   }
 }

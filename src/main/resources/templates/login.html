@@ -5,18 +5,32 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
-    <title th:text="#{label.pages.home.message}">Title</title>
+    <title th:text="#{label.pages.home.title}">Title</title>
     <script th:inline="javascript">
         function validate() {
             if (document.f.username.value === "" || document.f.password.value === "") {
                 alert(/*[[#{message.username} + #{message.password}]]*/);
                 document.f.username.focus();
             }
+            if (document.f.username.value === "") {
+                alert(/*[[#{message.username}]]*/);
+                document.f.username.focus();
+                return false;
+            }
+            if (document.f.password.value === "") {
+                alert(/*[[#{message.password}]]*/);
+                document.f.password.focus();
+                return false;
+            }
 
         }
     </script>
 </head>
 <body>
+<div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
+
+
+<div th:if="${param.error != null}" class="alert alert-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div>
 
 <div class="container">
     <div class="row wrapper">
@@ -30,8 +44,7 @@
         <span id="welcometext">&nbsp;</span>
 
         <label class="col-sm-4" th:text="#{label.form.loginEmail}">Email</label>
-        <span class="col-sm-8"><input class="form-control" type="text" name="username"
-                                      value=""/></span>
+        <span class="col-sm-8"><input class="form-control" type="text" name="username" value=""/></span>
 
         <label class="col-sm-4" th:text="#{label.form.loginPass}">password</label>
         <span class="col-sm-8"><input class="form-control" type='password' name='password'/></span>

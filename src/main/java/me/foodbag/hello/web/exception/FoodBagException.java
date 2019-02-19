@@ -1,9 +1,8 @@
 package me.foodbag.hello.web.exception;
 
-import lombok.ToString;
-
-@ToString
 public class FoodBagException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
 
     public FoodBagException() { super(); }
 
