@@ -41,4 +41,25 @@ public class User {
     this.secret = Base32.random();
     this.enabled = false;
   }
+
+  @Override
+  public String toString() {
+    return "User [id="
+        + id
+        + ", firstName="
+        + firstName
+        + ", lastName="
+        + lastName
+        + ", email="
+        + email
+        + ", password="
+        + password
+        + ", enabled="
+        + enabled
+        + ", secret="
+        + secret
+        + ", roles="
+        + roles
+        + "]";
+  }
 }
