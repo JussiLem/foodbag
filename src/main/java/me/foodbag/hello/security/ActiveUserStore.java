@@ -1,22 +1,20 @@
 package me.foodbag.hello.security;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /** Palauttaa aktiivisena olevan käyttäjän */
-public class ActiveUserStorage {
+@Getter
+@Setter
+public class ActiveUserStore {
 
   private List<String> users;
 
-  public ActiveUserStorage() {
+  public ActiveUserStore() {
     users = new ArrayList<>();
   }
 
-  public List<String> getUsers() {
-    return users;
-  }
-
-  public void setUsers(List<String> users) {
-    this.users = users;
-  }
 }

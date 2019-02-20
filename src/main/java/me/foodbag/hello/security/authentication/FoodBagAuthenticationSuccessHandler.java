@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import me.foodbag.hello.persistence.model.User;
-import me.foodbag.hello.security.ActiveUserStorage;
+import me.foodbag.hello.security.ActiveUserStore;
 import me.foodbag.hello.security.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -33,7 +33,8 @@ public class FoodBagAuthenticationSuccessHandler implements AuthenticationSucces
   private static final String READ_PRIVILEGE = "READ_PRIVILEGE";
   private static final String WRITE_PRIVILEGE = "WRITE_PRIVILEGE";
 
-  @Autowired ActiveUserStorage activeUserStorage;
+  @Autowired
+  ActiveUserStore activeUserStorage;
 
   @Override
   public void onAuthenticationSuccess(

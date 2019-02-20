@@ -29,7 +29,7 @@ public class MvcConf implements WebMvcConfigurer {
     super();
   }
 
-  @Autowired @Lazy private MessageSource messageSource;
+  @Autowired private MessageSource messageSource;
 
   // Overrided methods
 
@@ -42,9 +42,15 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addViewController("/console.html");
     registry.addViewController("/invalidSession.html");
     registry.addViewController("/homepage.html");
-    registry.addViewController("/error.html");
     registry.addViewController("/successRegister.html");
     registry.addViewController("/users.html");
+    registry.addViewController("/admin.html");
+    registry.addViewController("/logout.html");
+    registry.addViewController("/emailError.html");
+    registry.addViewController("/users.html");
+    registry.addViewController("/updatePassword.html");
+    registry.addViewController("/changePassword.html");
+    registry.addViewController("/badUser.html");
   }
 
   @Override
@@ -70,7 +76,7 @@ public class MvcConf implements WebMvcConfigurer {
     cookieLocaleResolver.setDefaultLocale(Locale.getDefault());
     return cookieLocaleResolver;
   }
-
+/*
   @Bean
   public MessageSource messageSource() {
     final ReloadableResourceBundleMessageSource messageSources =
@@ -81,7 +87,7 @@ public class MvcConf implements WebMvcConfigurer {
     messageSources.setCacheSeconds(0);
     return messageSources;
   }
-
+*/
   @Bean
   public EmailValidator usernameValidator() {
     return new EmailValidator();

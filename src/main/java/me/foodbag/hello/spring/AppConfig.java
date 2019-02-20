@@ -1,6 +1,6 @@
 package me.foodbag.hello.spring;
 
-import me.foodbag.hello.security.ActiveUserStorage;
+import me.foodbag.hello.security.ActiveUserStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
     @Bean
-    public ActiveUserStorage activeUserStorage() {
-        return new ActiveUserStorage();
+    public ActiveUserStore activeUserStorage() {
+        return new ActiveUserStore();
     }
 }

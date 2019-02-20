@@ -31,7 +31,7 @@ public class LoginAttemptService {
     loadingCache.invalidate(key);
   }
 
-  void loginFailed(final String key) {
+    public void loginFailed(final String key) {
     int attempts;
     try {
       attempts = loadingCache.get(key);

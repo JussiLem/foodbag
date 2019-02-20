@@ -1,6 +1,7 @@
 package me.foodbag.hello.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import me.foodbag.hello.web.exception.InvalidOldPasswordException;
 import me.foodbag.hello.web.exception.UserAlreadyExistException;
 import me.foodbag.hello.web.exception.UserNotFoundException;
 import me.foodbag.hello.web.util.GenericResponse;
@@ -56,7 +57,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
   }
 
-
+  @ExceptionHandler({ InvalidOldPasswordException.class })
+  public ResponseEntity<Object> handleInvalidOldPassword(final RuntimeException ex, final WebRequest request) {
+    log.error("400 Status Code", ex);
+    final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.invalidOldPassword", null, request.getLocale()), "InvalidOldPassword");
+    return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+  }
 
   // 404
   @ExceptionHandler({ UserNotFoundException.class })

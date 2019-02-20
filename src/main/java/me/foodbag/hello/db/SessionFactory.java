@@ -65,6 +65,7 @@ public class SessionFactory {
     Properties hibernateProperties = new Properties();
     hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDB103Dialect");
     hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+    hibernateProperties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
     return hibernateProperties;
   }
 

@@ -1,22 +1,22 @@
 package me.foodbag.hello.web.controller;
 
-import me.foodbag.hello.security.ActiveUserStorage;
+import me.foodbag.hello.security.ActiveUserStore;
 import me.foodbag.hello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 
-@RestController
+@Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private ActiveUserStorage activeUserStorage;
+    private ActiveUserStore activeUserStorage;
 
 
     @GetMapping(value = "/loggedUser")

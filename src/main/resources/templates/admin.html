@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title th:text="#{label.pages.home.title}"></title>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -17,23 +18,9 @@
 </nav>
 
 <div class="container">
-    <div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
+    <p sec:authorize="!hasAuthority('WRITE_PRIVILEGE')" th:text="#{message.unauth}">unauth</p>
 
-    <h1>This is the landing page for the admin</h1>
-
-    <div sec:authorize="hasAuthority('READ_PRIVILEGE')">This text is only visible to a user</div>
-
-    <div sec:authorize="hasAuthority('WRITE_PRIVILEGE')"> This text is only visible to an admin</div>
-
-    <a class="btn btn-default" th:href="@{/admin.html}" th:text="#{label.pages.admin}">admin</a>
-
-    <a class="btn btn-default" th:href="@{/changePassword.html}" th:text="#{message.changePassword}">change password</a>
-    <br/>
-
-    <br/>
-    <br/>
-    <br/>
-
+    <h1 sec:authorize="hasAuthority('WRITE_PRIVILEGE')" th:text="#{label.pages.admin.message}">admin</h1>
 </div>
 </body>
 </html>

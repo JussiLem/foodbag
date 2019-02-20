@@ -15,9 +15,9 @@ public class LoggedUser implements HttpSessionBindingListener {
 
   private String username;
 
-  private ActiveUserStorage activeUserStorage;
+  private ActiveUserStore activeUserStorage;
 
-  public LoggedUser(String username, ActiveUserStorage activeUserStorage) {
+  public LoggedUser(String username, ActiveUserStore activeUserStorage) {
     this.username = username;
     this.activeUserStorage = activeUserStorage;
   }

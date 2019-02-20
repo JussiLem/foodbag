@@ -27,6 +27,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
   @Autowired private HttpServletRequest httpServletRequest;
 
+  @Autowired private LoginAttemptService loginAttemptService;
+
   public MyUserDetailsService() {
     super();
   }
@@ -34,7 +36,9 @@ public class MyUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(final String s) throws UsernameNotFoundException {
     final String ip = getClientIp();
-    // if ()    //TODO IP tarkistus
+    if (loginAttemptService.isBlocked(ip)) {
+      throw new FoodBagException("blocked");
+    }
 
     try {
       final User user = userRepository.findByEmail(s);

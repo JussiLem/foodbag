@@ -8,6 +8,7 @@ import me.foodbag.hello.persistence.model.VerificationToken;
 import me.foodbag.hello.registration.RegistrationEvent;
 import me.foodbag.hello.service.UserService;
 import me.foodbag.hello.web.dto.UserDto;
+import me.foodbag.hello.web.exception.InvalidOldPasswordException;
 import me.foodbag.hello.web.util.GenericResponse;
 import me.foodbag.hello.web.dto.PasswordDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,10 +124,10 @@ public class RegistrationController {
     userService.changeUserPassword(user, passwordDto.getNewPassword());
     return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
   }
-  /*
+
   // change user password
   @PostMapping(value = "/user/updatePassword")
-  public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordValid passwordDto) {
+  public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
       final User user = userService.findUserByMailAddress(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
       if (!userService.checkIfValidOldPassword(user, passwordDto.getOldPassword())) {
           throw new InvalidOldPasswordException();
@@ -135,7 +136,7 @@ public class RegistrationController {
       return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
   }
 
-  */
+
   private String getAppUrl(HttpServletRequest request) {
     return "http://"
         + request.getServerName()

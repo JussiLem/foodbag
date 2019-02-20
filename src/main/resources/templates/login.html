@@ -25,6 +25,10 @@
 
         }
     </script>
+    <style type="text/css">
+        .wrapper{width:500px;margin-left:auto;margin-right:auto}
+        label{padding-left:0 !important}
+    </style>
 </head>
 <body>
 <div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
@@ -35,12 +39,12 @@
 <div class="container">
     <div class="row wrapper">
         <h1 th:text="#{label.form.loginTitle}">Header</h1>
-        <a href="?lang=en" th:text="#{label.form.loginEnglish}">login</a>
+        <a href="?lang=en" th:text="#{label.form.loginEnglish}">login</a> |
         <a href="?lang=fi_FI" th:text="#{label.form.loginFinnish}">login</a>
     </div>
     <br/>
 
-    <form name="f" action="/loggedUser" method="post" onsubmit="return validate();">
+    <form name="f" action="login" method="post" onsubmit="return validate();">
         <span id="welcometext">&nbsp;</span>
 
         <label class="col-sm-4" th:text="#{label.form.loginEmail}">Email</label>

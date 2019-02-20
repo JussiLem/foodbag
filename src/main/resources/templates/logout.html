@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{label.pages.home.title}">home</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1 id="error" class="alert alert-danger" th:if="${session[SPRING_SECURITY_LAST_EXCEPTION]}"
+        th:text="#{message.logoutError}">error</h1>
+
+    <h1 id="success" class="alert alert-info" th:if="${param.logSucc}"
+        th:text="#{message.logoutSucc}"> success</h1>
+    <br/><br/><br/>
+    <a class="btn btn-primary" th:href="@{/login}" th:text="#{label.form.loginLink}">login</a>
+</div>
+
+</body>
+</html>

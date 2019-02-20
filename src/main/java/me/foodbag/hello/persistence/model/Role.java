@@ -33,4 +33,9 @@ public class Role {
   public Role() {
     super();
   }
+
+  @Override
+  public String toString() {
+    return "Role [name=" + name + "]" + "[id=" + id + "]";
+  }
 }
