@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface FoodService {
 
-  Food getFriendById(Long id);
+  Food getFoodById(Long id);
 
-  Food getFriendByName(String name);
+  Food getFoodByName(String name);
 
-  List<Food> getAllFriends();
+  List<Food> getAllFoods();
 
   boolean exists(String name);
 
