@@ -1,43 +1,32 @@
-package me.foodbag.hello.persistence.model
+package me.foodbag.hello.persistence.model;
 
-import lombok.Data
-import javax.persistence.*
+import lombok.Data;
+import javax.persistence.*;
 
 @Data
 @Entity
-class Food {
+public class Food {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private val id: Long
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
 
-    @Column(name = "name")
-    private val name: String
+  @Column(name = "name")
+  private String name;
 
-    var comment: String? = null
-        set(comment) {
-            field = this.comment
-        }
+  private String comment;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn
+  private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    var user: User? = null
-        set(user) {
-            field = this.user
-        }
+  public Food() {
 
-    /**
-     * Constructor for the mock tests. If changed then mocks will fail.
-     * @param id food id
-     * @param name name of the food
-     */
-    constructor(id: Long, name: String) {
-        this.id = id
-        this.name = name
-    }
-
-    constructor() {
-        //for hibernate
-    }
+    // hibernate
+  }
+  /** Constructor for the mock tests. If changed then mocks will fail. */
+  public Food(long id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 }

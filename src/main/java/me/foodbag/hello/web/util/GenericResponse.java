@@ -1,49 +1,52 @@
-package me.foodbag.hello.web.util
+package me.foodbag.hello.web.util;
 
-import java.util.stream.Collectors
+import java.util.List;
+import java.util.stream.Collectors;
 
-import lombok.Getter
-import lombok.Setter
-import org.springframework.validation.FieldError
-import org.springframework.validation.ObjectError
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 
 @Setter
 @Getter
-class GenericResponse {
-    private var message: String? = null
-    private var error: String? = null
+public class GenericResponse {
+    private String message;
+    private String error;
 
-    constructor(message: String) : super() {
-        this.message = message
+    public GenericResponse(final String message) {
+        super();
+        this.message = message;
     }
 
-    constructor(message: String, error: String) : super() {
-        this.message = message
-        this.error = error
+    public GenericResponse(final String message, final String error) {
+        super();
+        this.message = message;
+        this.error = error;
     }
 
-    constructor(allErrors: List<ObjectError>, error: String) {
-        this.error = error
-        val temp = allErrors.stream()
-                .map<String> { e ->
-                    if (e is FieldError) {
-                        return@allErrors.stream()
-                                .map("{\"field\":\""
-                                        + e.field
-                                        + "\",\"defaultMessage\":\""
-                                        + e.getDefaultMessage()
-                                        + "\"}")
-                    } else {
-                        return@allErrors.stream()
-                                .map("{\"object\":\""
-                                        + e.objectName
-                                        + "\",\"defaultMessage\":\""
-                                        + e.defaultMessage
-                                        + "\"}")
-                    }
-                }
-                .collect<String, *>(Collectors.joining(","))
-        this.message = "[$temp]"
+    public GenericResponse(List<ObjectError> allErrors, String error) {
+        this.error = error;
+        String temp =
+                allErrors.stream()
+                        .map(
+                                e -> {
+                                    if (e instanceof FieldError) {
+                                        return "{\"field\":\""
+                                                + ((FieldError) e).getField()
+                                                + "\",\"defaultMessage\":\""
+                                                + e.getDefaultMessage()
+                                                + "\"}";
+                                    } else {
+                                        return "{\"object\":\""
+                                                + e.getObjectName()
+                                                + "\",\"defaultMessage\":\""
+                                                + e.getDefaultMessage()
+                                                + "\"}";
+                                    }
+                                })
+                        .collect(Collectors.joining(","));
+        this.message = "[" + temp + "]";
     }
 
 }
