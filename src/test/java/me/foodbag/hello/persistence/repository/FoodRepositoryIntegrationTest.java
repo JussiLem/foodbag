@@ -30,7 +30,7 @@ public class FoodRepositoryIntegrationTest {
   }
 
     @Test
-    public void whenFindByName_thenReturnFriend() {
+    public void whenFindByName_thenReturnFood() {
         // given
         Food rice = new Food(1, "Rice");
         entityManager.persist(rice);

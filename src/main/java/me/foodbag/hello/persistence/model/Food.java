@@ -1,30 +1,25 @@
 package me.foodbag.hello.persistence.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Currency;
 
 @Data
 @Entity
-@Table(name = "food")
 public class Food {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
   @Column(name = "name")
   private String name;
 
-  @Column(name = "comment", columnDefinition = "TEXT")
   private String comment;
 
-  private LocalDateTime date;
 
-  @Column(name = "price", columnDefinition = "DOUBLE")
-  private Currency price;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn
+  private User user;
 
   /**
    * Constructor for the mock tests. If changed then mocks will fail.

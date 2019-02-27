@@ -13,17 +13,17 @@ public class FoodServiceImpl implements FoodService {
   @Autowired private FoodRepository foodRepository;
 
   @Override
-  public Food getFriendById(Long id) {
+  public Food getFoodById(Long id) {
     return foodRepository.findById(id).orElse(null);
   }
 
   @Override
-  public Food getFriendByName(String name) {
+  public Food getFoodByName(String name) {
     return foodRepository.findByName(name);
   }
 
   @Override
-  public List<Food> getAllFriends() {
+  public List<Food> getAllFoods() {
     return foodRepository.findAll();
   }
 
