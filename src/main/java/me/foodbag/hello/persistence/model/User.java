@@ -6,7 +6,10 @@ import org.jboss.aerogear.security.otp.api.Base32;
 import javax.persistence.*;
 import java.util.Collection;
 
-/** User taulun tietue / sisältää peruskäyttäjät ja pääkäyttäjien tiedot */
+/**
+ * User taulun tietue / sisältää peruskäyttäjät ja pääkäyttäjien tiedot For storing users, will
+ * create a User entity that is mapped to a database table, with the following attributes:
+ */
 @Data
 @Entity
 @Table(name = "user_account")
@@ -28,7 +31,10 @@ public class User {
   private boolean enabled;
 
   private String secret;
-
+  /**
+   * Represents the roles of the user in the system; each role will have a set of
+   * low-level privileges
+   */
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "users_roles",

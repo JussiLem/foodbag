@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Retrieves the user and maps the right set of authorities from the roles and privileges the user
+ * has assigned
+ */
 @Service("userDetailsService")
 @Transactional
 public class MyUserDetailsService implements UserDetailsService {

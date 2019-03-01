@@ -8,8 +8,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.request.RequestContextListener;
@@ -20,9 +18,10 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.util.Locale;
 
+/** Kustomointi konfiguraatioita */
 @Configuration
-@ComponentScan(basePackages = "me.foodbag.hello.web")
 @EnableWebMvc
+@ComponentScan(basePackages = "me.foodbag.hello.web")
 public class MvcConf implements WebMvcConfigurer {
 
   public MvcConf() {
@@ -33,6 +32,12 @@ public class MvcConf implements WebMvcConfigurer {
 
   // Overrided methods
 
+  /**
+   * Map URLs to views so there is no need to create actual controller class. Need to pre-define
+   * URLs and their mapping views
+   *
+   * @param registry
+   */
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/").setViewName("forward:/login");
@@ -63,6 +68,10 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addResourceHandler("/resources/**").addResourceLocations("/", "/resources");
   }
 
+  /**
+   * Needs to be configured as a Spring bean somewhere (XML, Java Config or using annotations)
+   * @param registry
+   */
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
@@ -76,18 +85,18 @@ public class MvcConf implements WebMvcConfigurer {
     cookieLocaleResolver.setDefaultLocale(Locale.getDefault());
     return cookieLocaleResolver;
   }
-/*
-  @Bean
-  public MessageSource messageSource() {
-    final ReloadableResourceBundleMessageSource messageSources =
-        new ReloadableResourceBundleMessageSource();
-    messageSources.setBasename("classpath:messages");
-    messageSources.setUseCodeAsDefaultMessage(true);
-    messageSources.setDefaultEncoding("UTF-8");
-    messageSources.setCacheSeconds(0);
-    return messageSources;
-  }
-*/
+  /*
+    @Bean
+    public MessageSource messageSource() {
+      final ReloadableResourceBundleMessageSource messageSources =
+          new ReloadableResourceBundleMessageSource();
+      messageSources.setBasename("classpath:messages");
+      messageSources.setUseCodeAsDefaultMessage(true);
+      messageSources.setDefaultEncoding("UTF-8");
+      messageSources.setCacheSeconds(0);
+      return messageSources;
+    }
+  */
   @Bean
   public EmailValidator usernameValidator() {
     return new EmailValidator();

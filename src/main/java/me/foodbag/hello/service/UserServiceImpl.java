@@ -46,6 +46,13 @@ public class UserServiceImpl implements UserService {
   private static final String TOKEN_VALID = "valid";
   private static final String ROLE_USER = "ROLE_USER";
 
+  /**
+   * Registers a new account. When registered, it will set roles(and privileges). We’re assuming
+   * that a standard user is being registered, so the ROLE_USER role is assigned to it.
+   *
+   * @param account
+   * @return new user
+   */
   @Override
   public User registerNewUserAccount(final UserDto account) {
     if (emailExists(account.getEmail())) {

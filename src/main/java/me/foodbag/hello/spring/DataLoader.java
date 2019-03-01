@@ -16,7 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-/** Loads default settings for Foodbag */
+/**
+ * Loads default settings for Foodbag. At the startup of the application use an ApplicationListener
+ * on ContextRefreshedEvent to load our initial data on server start:
+ */
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 

@@ -16,6 +16,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * EnableJpaRepositories enables Spring Data JPA repositories by scanning the package of the
+ * annotated configuration class for repositories.
+ */
 @Configuration
 @ComponentScan
 @EnableJpaRepositories(basePackages = "me.foodbag.hello.persistence.repository")
@@ -59,7 +63,6 @@ public class SessionFactory {
   }
 
   /** Hibernate asetukset JPA:lle */
-
   @Bean
   protected Properties jpaProperties() {
     Properties hibernateProperties = new Properties();

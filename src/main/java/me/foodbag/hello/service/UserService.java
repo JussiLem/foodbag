@@ -4,7 +4,6 @@ import me.foodbag.hello.persistence.model.User;
 import me.foodbag.hello.persistence.model.VerificationToken;
 import me.foodbag.hello.web.dto.UserDto;
 import me.foodbag.hello.web.exception.FoodBagException;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +11,7 @@ import java.util.Optional;
 /**
  * Peruskäyttäjille luotu service luokka, Vastuussa esim. tilin luomisesta ja tarvittavan logiikan
  * suorittamisesta käyttäjän rekisteröimiseksi.
+ * To provide our own user service,
  */
 public interface UserService {
 
