@@ -28,6 +28,17 @@ public class MvcConf implements WebMvcConfigurer {
     super();
   }
 
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+    .allowedOrigins("http://localhost:3000")
+            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true)
+            .maxAge(3600);
+
+  }
+
   @Autowired private MessageSource messageSource;
 
   // Overrided methods
@@ -38,6 +49,7 @@ public class MvcConf implements WebMvcConfigurer {
    *
    * @param registry
    */
+  /*
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/").setViewName("forward:/login");
@@ -57,7 +69,14 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addViewController("/changePassword.html");
     registry.addViewController("/badUser.html");
   }
+*/
 
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/").setViewName("forward:/login");
+    registry.addViewController("/login");
+
+  }
   @Override
   public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
     configurer.enable();

@@ -26,6 +26,8 @@ public interface UserService {
 
   User getUser(String verificationToken);
 
+  void saveRegisteredUser(User user);
+
   void deleteUser(User user);
 
   User findUserByMailAddress(String email);
