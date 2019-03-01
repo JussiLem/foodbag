@@ -37,6 +37,12 @@ public class MyUserDetailsService implements UserDetailsService {
     super();
   }
 
+  /**
+   * finds a user entity based on the username.
+   * @param s name of the wanted user
+   * @return details of the user
+   * @throws UsernameNotFoundException if username not found
+   */
   @Override
   public UserDetails loadUserByUsername(final String s) throws UsernameNotFoundException {
     final String ip = getClientIp();
