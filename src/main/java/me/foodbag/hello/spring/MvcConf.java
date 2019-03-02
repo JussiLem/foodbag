@@ -70,13 +70,15 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addViewController("/badUser.html");
   }
 */
-
+/*
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/").setViewName("forward:/login");
     registry.addViewController("/login");
 
   }
+
+  */
   @Override
   public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
     configurer.enable();

@@ -77,7 +77,7 @@ public class OldRegistrationController {
         user.setEnabled(true);
         userService.saveRegisteredUser(user);
         model.addAttribute("message", messages.getMessage("message.accountVerified", null, locale));
-        return "redirect:/login.html?lang=" + locale.getLanguage();
+        return "redirect:/login?lang=" + locale.getLanguage();
     }
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = "/user/registration")
@@ -107,7 +107,7 @@ public class OldRegistrationController {
         final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         userService.changeUserPassword(user, password);
         model.addAttribute("message", messages.getMessage("message.resetPasswordSuc", null, locale));
-        return "redirect:/login.html?lang=" + locale;
+        return "redirect:/login?lang=" + locale;
     }
 
 }
