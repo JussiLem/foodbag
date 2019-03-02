@@ -9,12 +9,12 @@ class App extends Component {
         return (
             <div className="App container">
                 <Navbar fluid collapseOnSelect>
-                    <Navbar.Header>
+
                         <Navbar.Brand>
                             <Link to="/">FoodBag</Link>
                         </Navbar.Brand>
                         <Navbar.Toggle />
-                    </Navbar.Header>
+
                 </Navbar>
                 <Routes />
             </div>
