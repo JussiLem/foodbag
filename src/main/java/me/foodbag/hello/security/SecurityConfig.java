@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +28,11 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @Configuration
 @ComponentScan("me.foodbag.hello.security")
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
+)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired private UserDetailsService userDetailsService;
@@ -64,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/login*","/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
+            .antMatchers(HttpMethod.GET, "/login*","/login*", "/logout*", "/signin/**", "/signup/**", "/customLogin",
                     "/user/registration*", "/registrationConfirm*", "/expiredAccount*", "/registration*",
                     "/badUser*", "/user/resendRegistrationToken*" ,"/forgetPassword*", "/user/resetPassword*",
                     "/user/changePassword*", "/emailError*", "/resources/**","/old/user/registration*","/successRegister*", "/api").permitAll()
@@ -73,9 +80,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().hasAuthority("READ_PRIVILEGE")
             .and()
             .formLogin()
-            .loginPage("/login")
-            .defaultSuccessUrl("/homepage.html")
-            .failureUrl("/login?error=true")
             .successHandler(myAuthenticationSuccessHandler)
             .failureHandler(authenticationFailureHandler)
             .authenticationDetailsSource(authenticationDetailsSource)
