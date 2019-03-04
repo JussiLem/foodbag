@@ -8,6 +8,9 @@ import lombok.Setter;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
+/**
+ * Holds the generic responses, messages and errors
+ */
 @Setter
 @Getter
 public class GenericResponse {

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-/** Kuuntelee rekisteröitymisiä */
+/** Handles the RegistraionCompleteEvent
+ *
+ * */
 @Component
 public class RegistrationListener implements ApplicationListener<RegistrationEvent> {
 

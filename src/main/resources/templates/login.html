@@ -10,6 +10,10 @@
           crossorigin="anonymous">
     <title th:text="#{label.pages.home.title}">Title</title>
     <script th:inline="javascript">
+        /**
+         * Simple validator for the fields. Localizations are in use.
+         * @returns {boolean}
+         */
         function validate() {
             if (document.f.username.value === "" || document.f.password.value === "") {
                 alert(/*[[#{message.username} + #{message.password}]]*/);
@@ -34,9 +38,10 @@
     </style>
 </head>
 <body>
+<!-- Show the info messages -->
 <div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
 
-
+<!-- Show the error messages -->
 <div th:if="${param.error != null}" class="alert alert-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div>
 
 <div class="container">

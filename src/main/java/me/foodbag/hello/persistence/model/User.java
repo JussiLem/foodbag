@@ -28,12 +28,17 @@ public class User {
   @Column(length = 60)
   private String password;
 
+  /**
+   * When the User is registered, this enabled field will be set to <i>false</i>.
+   * During the account verification process - if successful it will become <i>true</i>
+   * //TODO Currently have to be enabled straight from the User table
+   */
   private boolean enabled;
 
   private String secret;
   /**
    * Represents the roles of the user in the system; each role will have a set of
-   * low-level privileges
+   * low-level privileges.
    */
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(

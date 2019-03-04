@@ -70,6 +70,7 @@ public class MvcConf implements WebMvcConfigurer {
 
   /**
    * Needs to be configured as a Spring bean somewhere (XML, Java Config or using annotations)
+   *
    * @param registry
    */
   @Override
@@ -79,6 +80,15 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addInterceptor(localeChangeInterceptor);
   }
 
+  /**
+   * works in conjunction with its LocaleChangeInterceptor API to make possible the display of
+   * messages in different languages. By default, the locale resolver will obtain the locale code
+   * from the HTTP header, so it needs to be forced by setting it on the LocalResolver().
+   * CookieLocaleResolver is being used, which means that it stores the locale information in a
+   * client side cookie; it will remember the user’s locale every time they log in, and during the entire visit.
+   *
+   * @return local language
+   */
   @Bean
   public LocaleResolver localeResolver() {
     final CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();

@@ -50,6 +50,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
   @Override
   @Transactional
   public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    // alreadySetup flag to determine if the setup needs to run or not.
     if (alreadySetup) {
       return;
     }

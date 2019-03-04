@@ -13,9 +13,11 @@
 </head>
 <body>
 <div class="container">
+    <!-- Show the error messages - will check if there was an error in the logout process. -->
     <h1 id="error" class="alert alert-danger" th:if="${session[SPRING_SECURITY_LAST_EXCEPTION]}"
         th:text="#{message.logoutError}">error</h1>
 
+    <!-- Success message if the logout was successful -->
     <h1 id="success" class="alert alert-info" th:if="${param.logSucc}"
         th:text="#{message.logoutSucc}"> success</h1>
     <br/><br/><br/>

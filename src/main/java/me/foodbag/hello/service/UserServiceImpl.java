@@ -48,7 +48,10 @@ public class UserServiceImpl implements UserService {
 
   /**
    * Registers a new account. When registered, it will set roles(and privileges). We’re assuming
-   * that a standard user is being registered, so the ROLE_USER role is assigned to it.
+   * that a standard user is being registered, so the ROLE_USER role is assigned to it. throws
+   * Exception if the email exists already. The UserService relies on the UserRepository class to
+   * check if a user with a given email address already exists in the database.
+   * Password is encoded during the user registration process.
    *
    * @param account
    * @return new user
@@ -64,6 +67,7 @@ public class UserServiceImpl implements UserService {
     user.setLastName(account.getLastName());
     user.setPassword(passwordEncoder.encode(account.getPassword()));
     user.setEmail(account.getEmail());
+    // Assuming that a standard user is being registered, so the ROLE_USER role is assigned to it.
     user.setRoles(ImmutableSet.of(roleRepository.findByName(ROLE_USER)));
     return userRepository.save(user);
   }

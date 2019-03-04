@@ -38,12 +38,20 @@ public class RegistrationController {
 
   @Autowired private ApplicationEventPublisher eventPublisher;
 
-
   // Registration
 
+  /**
+   * Sign-Up link on the login page will take the user to the <i>registration</i> page. That page is
+   * mapped in this registration controller and is mapped to <i>"/user/registration"</i>.
+   * Mapped to a <b>HTTP POST</b>
+   *
+   * @param accountDto
+   * @param request
+   * @return proper DTO directly into the body of the Response
+   */
   @PostMapping(value = "/user/registration")
   public GenericResponse registerUserAccount(
-          @Valid final UserDto accountDto, final HttpServletRequest request) {
+      @Valid final UserDto accountDto, final HttpServletRequest request) {
     log.debug("Registering user account with information: {}", accountDto);
 
     final User registered = userService.registerNewUserAccount(accountDto);
@@ -52,6 +60,8 @@ public class RegistrationController {
     return new GenericResponse("success");
   }
 
+  // TODO Confirm the registration by a "Confirm Registration" link by email. GET reques will enable
+  // the User
   @GetMapping(value = "/registrationConfirm")
   public String confirmRegistration(
       final HttpServletRequest request,
@@ -104,6 +114,7 @@ public class RegistrationController {
         messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
   }
 
+  //TODO not working properly
   @GetMapping(value = "/user/changePassword")
   public String showChangePasswordPage(
       final Locale locale,
@@ -126,16 +137,19 @@ public class RegistrationController {
   }
 
   // change user password
+  //TODO not working properly
   @PostMapping(value = "/user/updatePassword")
   public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
-      final User user = userService.findUserByMailAddress(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
-      if (!userService.checkIfValidOldPassword(user, passwordDto.getOldPassword())) {
-          throw new InvalidOldPasswordException();
-      }
-      userService.changeUserPassword(user, passwordDto.getNewPassword());
-      return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
+    final User user =
+        userService.findUserByMailAddress(
+            ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .getEmail());
+    if (!userService.checkIfValidOldPassword(user, passwordDto.getOldPassword())) {
+      throw new InvalidOldPasswordException();
+    }
+    userService.changeUserPassword(user, passwordDto.getNewPassword());
+    return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
   }
-
 
   private String getAppUrl(HttpServletRequest request) {
     return "http://"

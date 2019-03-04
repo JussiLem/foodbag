@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Foodbags exception handling logic is done through here
+ * @ControllerAdvice deals with the exceptions thrown by the application
+ */
 @Slf4j
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -28,6 +32,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         super();
     }
 
+    /**
+     * Is thrown when the UserDto validated(if invalid). Override the default
+     * @param ex
+     * @param headers
+     * @param status
+     * @param request
+     * @return
+     */
     // 400
     @Override
     protected ResponseEntity<Object> handleBindException(
@@ -72,6 +84,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    /**
+     * Is thrown when the user to register with an email that already exists:
+     * @param ex
+     * @param request
+     * @return
+     */
     // 409
     @ExceptionHandler({UserAlreadyExistException.class})
     public ResponseEntity<Object> handleUserAlreadyExist(

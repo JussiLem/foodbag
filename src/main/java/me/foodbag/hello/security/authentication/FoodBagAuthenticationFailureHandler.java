@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Locale;
 
+/** Customizes the exception messages coming from MyUserDetailsService */
 @Component("authenticationFailureHandler")
 public class FoodBagAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 

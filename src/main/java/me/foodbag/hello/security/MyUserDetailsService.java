@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Retrieves the user and maps the right set of authorities from the roles and privileges the user
+ * Retrieves the user from db and maps the right set of authorities from the roles and privileges the user
  * has assigned
  */
 @Service("userDetailsService")
@@ -38,7 +38,8 @@ public class MyUserDetailsService implements UserDetailsService {
   }
 
   /**
-   * finds a user entity based on the username.
+   * Loads a user entity based on the username. Only allows the users to authenticate that are
+   * enabled.
    * @param s name of the wanted user
    * @return details of the user
    * @throws UsernameNotFoundException if username not found
