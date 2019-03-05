@@ -4,6 +4,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Collection;
 
+/**
+ * Role entity represents the high-level roles of the user in the system; each role will have a set of low-level privileges
+ */
 @Data
 @Entity
 public class Role {

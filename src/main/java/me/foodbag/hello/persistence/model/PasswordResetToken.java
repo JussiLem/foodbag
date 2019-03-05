@@ -6,6 +6,10 @@ import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * When a password reset is triggered – a token will be created and a special link containing this
+ * token will be emailed to the user. //TODO not yet implemented. Email not working yet.
+ */
 @Entity
 @Data
 public class PasswordResetToken {

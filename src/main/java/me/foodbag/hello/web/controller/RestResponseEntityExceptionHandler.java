@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 /**
  * Foodbags exception handling logic is done through here
- * @ControllerAdvice deals with the exceptions thrown by the application
+ * ControllerAdvice deals with the exceptions thrown by the application
  */
 @Slf4j
 @ControllerAdvice

@@ -38,7 +38,7 @@ public class User {
   private String secret;
   /**
    * Represents the roles of the user in the system; each role will have a set of
-   * low-level privileges.
+   * low-level privileges. User-Role relationship is a flexible many to many.
    */
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(

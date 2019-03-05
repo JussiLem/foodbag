@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Collection;
 
+/**
+ * Privilege entity represents a low-level, granular privilege/authority in the FoodBag System
+ */
 @Data
 @Entity
 public class Privilege {
