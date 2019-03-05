@@ -38,7 +38,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
      * @param headers
      * @param status
      * @param request
-     * @return
+     * @return return value from a @Controller method
      */
     // 400
     @Override
@@ -88,7 +88,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
      * Is thrown when the user to register with an email that already exists:
      * @param ex
      * @param request
-     * @return
+     * @return return value from a @Controller method
      */
     // 409
     @ExceptionHandler({UserAlreadyExistException.class})
