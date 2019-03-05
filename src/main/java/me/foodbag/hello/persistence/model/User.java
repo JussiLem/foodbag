@@ -74,6 +74,8 @@ public class User {
         + secret
         + ", roles="
         + roles
+        +", foods="
+        + foods
         + "]";
   }
 }

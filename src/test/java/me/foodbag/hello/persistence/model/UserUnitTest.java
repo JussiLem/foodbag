@@ -2,6 +2,10 @@ package me.foodbag.hello.persistence.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserUnitTest {
@@ -62,6 +66,29 @@ public class UserUnitTest {
 
     assertThat(user.toString())
         .isEqualTo(
-            "User [id=0, firstName=Bobby, lastName=Boblander, email=bobs@domain.com, password=bobiverse, enabled=false, secret=test, roles=null]");
+            "User [id=0, firstName=Bobby, lastName=Boblander, email=bobs@domain.com, password=bobiverse, enabled=false, secret=test, roles=null, foods=null]");
+  }
+
+  @Test
+  public void testIfUserHasFood() {
+    User user = new User();
+
+    user.setFirstName("Mike");
+    user.setLastName("Hoffmann");
+    user.setEmail("mike@hoff.com");
+    user.setFoods(createFoodsForUser());
+    assertThat(user.getFoods()).isNotEmpty();
+  }
+
+  private Collection<Food> createFoodsForUser() {
+    Food food = new Food();
+    food.setId(1);
+    food.setName("Burger");
+    food.setComment("Nice");
+    Food food2 = new Food();
+    food2.setId(2);
+    food2.setName("Fries");
+    food2.setName("Awsome");
+    return Collections.unmodifiableList(Arrays.asList(food, food2));
   }
 }
