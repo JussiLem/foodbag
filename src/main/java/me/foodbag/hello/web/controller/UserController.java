@@ -19,7 +19,7 @@ public class UserController {
     private ActiveUserStore activeUserStorage;
 
 
-    @GetMapping(value = "/loggedUser")
+    @GetMapping(value = "/loggedUsers")
     public String getLoggedUsers(final Locale locale, final Model model) {
         model.addAttribute("users", activeUserStorage.getUsers());
         return "users";
