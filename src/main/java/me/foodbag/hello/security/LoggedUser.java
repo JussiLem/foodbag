@@ -8,6 +8,11 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 import java.util.List;
 
+/**
+ * Uses the HttpSessionBindingListener interface. Listens to events of type HttpSessionBindingEvent,
+ * which are triggered whenever a value is set or removed, or, in other words, bound or unbound, to
+ * the HTTP session
+ */
 @Getter
 @Setter
 @Component
@@ -24,6 +29,11 @@ public class LoggedUser implements HttpSessionBindingListener {
 
   public LoggedUser() {}
 
+  /**
+   * the valueBound() method will be called when the user logs in
+   *
+   * @param event
+   */
   @Override
   public void valueBound(HttpSessionBindingEvent event) {
     List<String> users = activeUserStorage.getUsers();
@@ -33,6 +43,11 @@ public class LoggedUser implements HttpSessionBindingListener {
     }
   }
 
+  /**
+   * valueUnbound() method will be called when the user logs out or when the session expires
+   *
+   * @param event
+   */
   @Override
   public void valueUnbound(HttpSessionBindingEvent event) {
     List<String> users = activeUserStorage.getUsers();

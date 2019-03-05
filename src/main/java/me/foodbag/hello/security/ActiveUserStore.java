@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Palauttaa aktiivisena olevan käyttäjän */
+/** ActiveUserStorage acts as an in-memory store for the logged in users */
 @Getter
 @Setter
 public class ActiveUserStore {
