@@ -47,6 +47,9 @@ public class User {
       inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Collection<Role> roles;
 
+  @OneToMany
+  private Collection<Food> foods;
+
   public User() {
     super();
     this.secret = Base32.random();
