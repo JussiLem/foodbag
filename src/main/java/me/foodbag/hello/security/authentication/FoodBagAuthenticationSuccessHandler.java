@@ -21,6 +21,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Implement the interface and provide a custom implementation of the success handler. This
+ * implementation is going to determine the URL to redirect the user to after login based on the
+ * role of the user
+ */
 @Getter
 @Setter
 @Slf4j
@@ -33,8 +38,7 @@ public class FoodBagAuthenticationSuccessHandler implements AuthenticationSucces
   private static final String READ_PRIVILEGE = "READ_PRIVILEGE";
   private static final String WRITE_PRIVILEGE = "WRITE_PRIVILEGE";
 
-  @Autowired
-  ActiveUserStore activeUserStorage;
+  @Autowired ActiveUserStore activeUserStorage;
 
   @Override
   public void onAuthenticationSuccess(
@@ -74,6 +78,15 @@ public class FoodBagAuthenticationSuccessHandler implements AuthenticationSucces
     redirectStrategy.sendRedirect(request, response, targetUrl);
   }
 
+  /**
+   * The core of the strategy – simply looks at the type of user (determined by the authority) and
+   * picks the target URL based on this role. So, an admin user – determined by the ROLE_ADMIN
+   * authority – will be redirected to the console page after login, while the standard user – as
+   * determined by ROLE_USER – will be redirected to the homepage.
+   *
+   * @param auth
+   * @return the target url based on user role
+   */
   private String targetUrl(final Authentication auth) {
     boolean isUser = false;
     boolean isAdmin = false;

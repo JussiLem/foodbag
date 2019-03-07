@@ -10,13 +10,13 @@ import java.util.Optional;
 
 /**
  * Peruskäyttäjille luotu service luokka, Vastuussa esim. tilin luomisesta ja tarvittavan logiikan
- * suorittamisesta käyttäjän rekisteröimiseksi.
- * To provide our own user service,
+ * suorittamisesta käyttäjän rekisteröimiseksi. Provide our own user service to hide the
+ * UserRepository.
  */
 public interface UserService {
 
   /**
-   * Rekisteröi järjestelmään uuden peruskäyttäjän
+   * Rekisteröi järjestelmään uuden käyttäjän
    *
    * @param user lisättävä käyttäjä
    * @return palauttaa uuden käyttäjän

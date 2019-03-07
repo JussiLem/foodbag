@@ -13,7 +13,7 @@ import java.lang.annotation.*;
  * "https://stackoverflow.com/questions/4459474/hibernate-validator-email-accepts-askstackoverflow-as-valid"
  */
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.RUNTIME) // Runtime annotation
 @Constraint(validatedBy = EmailValidator.class)
 @Documented
 public @interface ValidEmail {

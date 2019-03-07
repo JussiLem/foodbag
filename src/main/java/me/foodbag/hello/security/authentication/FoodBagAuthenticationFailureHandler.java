@@ -1,5 +1,7 @@
 package me.foodbag.hello.security.authentication;
 
+import lombok.extern.slf4j.Slf4j;
+import me.foodbag.hello.web.exception.FoodBagException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.AuthenticationException;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 /** Customizes the exception messages coming from MyUserDetailsService */
+@Slf4j
 @Component("authenticationFailureHandler")
 public class FoodBagAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
@@ -40,6 +43,11 @@ public class FoodBagAuthenticationFailureHandler extends SimpleUrlAuthentication
       errorMessage = messageSource.getMessage("auth.message.blocked", null, locale);
     }
 
-    request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, errorMessage);
+    try{
+      request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, errorMessage);
+    } catch (IllegalStateException e) {
+      throw new FoodBagException("Autentikaation luonnissa poikkeus: ", e);
+    }
+
   }
 }
