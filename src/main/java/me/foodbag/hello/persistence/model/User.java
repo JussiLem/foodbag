@@ -25,6 +25,9 @@ public class User {
 
   private String email;
 
+  /**
+   * 60 characters is the length of the current crypted password
+   */
   @Column(length = 60)
   private String password;
 
@@ -35,6 +38,9 @@ public class User {
    */
   private boolean enabled;
 
+  /**
+   * Save a random secret code for each user to be used later in generating verification code
+   */
   private String secret;
   /**
    * Represents the roles of the user in the system; each role will have a set of
@@ -56,6 +62,10 @@ public class User {
     this.enabled = false;
   }
 
+  /**
+   * Editing this will break unit tests
+   * @return User as a string
+   */
   @Override
   public String toString() {
     return "User [id="
