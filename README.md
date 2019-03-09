@@ -20,6 +20,11 @@ By typing in the projects home directory(where the docker-compose.yml is located
 docker-compose up -d
 ````
 
+Logs can be followed by typing:
+````bash
+docker-compose logs -f
+````
+
 Head to http://localhost:8080<br>
 Should see the login page.
 
