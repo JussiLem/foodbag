@@ -4,5 +4,5 @@ VOLUME /tmp
 ARG DEPENDENCY=target/dependency
 COPY . /hello
 WORKDIR /hello
-EXPOSE 8080
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "./target/hello-0.0.3.jar"]
+EXPOSE 8080 5005
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005", "-jar", "./target/hello-0.0.3.jar"]

@@ -60,7 +60,7 @@ public class RegistrationController {
     return new GenericResponse("success");
   }
 
-  // TODO Confirm the registration by a "Confirm Registration" link by email. GET reques will enable
+  // Still missing Confirm the registration by a "Confirm Registration" link by email. GET reques will enable
   // the User
   @GetMapping(value = "/registrationConfirm")
   public String confirmRegistration(
@@ -114,7 +114,7 @@ public class RegistrationController {
         messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
   }
 
-  //TODO not working properly
+  // not working properly
   @GetMapping(value = "/user/changePassword")
   public String showChangePasswordPage(
       final Locale locale,
@@ -137,7 +137,7 @@ public class RegistrationController {
   }
 
   // change user password
-  //TODO not working properly
+  //not working properly
   @PostMapping(value = "/user/updatePassword")
   public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
     final User user =

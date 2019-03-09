@@ -1,22 +1,11 @@
 version: "3"
 services:
-  jenkins:
-    image: jenkinsci/blueocean
-    user: root
-    ports:
-      - 8080:8080
-      - 8443:8443
-      - 50000:50000
-    volumes:
-      - ./jenkins_home:/var/jenkins_home
-      - /home:/home
-      - /var/run/docker.sock:/var/run/docker.sock
   foodbag:
     build: '.'
     depends_on:
       - foodbagdb
     ports:
-      - 8085:8085
+      - 8080:8080
       - 5005:5005
       - 35729:35729
     environment:

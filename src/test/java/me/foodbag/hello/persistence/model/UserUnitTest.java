@@ -1,5 +1,6 @@
 package me.foodbag.hello.persistence.model;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -7,7 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+@Slf4j
 public class UserUnitTest {
   @Test
   public void whenCalledGetName_thenCorrect() {
@@ -78,6 +79,8 @@ public class UserUnitTest {
     user.setEmail("mike@hoff.com");
     user.setFoods(createFoodsForUser());
     assertThat(user.getFoods()).isNotEmpty();
+    assertThat(user.getFoods().containsAll(createFoodsForUser())).isTrue();
+
   }
 
   private Collection<Food> createFoodsForUser() {
