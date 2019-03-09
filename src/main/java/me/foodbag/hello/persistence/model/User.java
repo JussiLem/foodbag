@@ -31,7 +31,7 @@ public class User {
   /**
    * When the User is registered, this enabled field will be set to <i>false</i>.
    * During the account verification process - if successful it will become <i>true</i>
-   * //TODO Currently have to be enabled straight from the User table when new user registers
+   * //Currently have to be enabled straight from the User table when new user registers
    */
   private boolean enabled;
 

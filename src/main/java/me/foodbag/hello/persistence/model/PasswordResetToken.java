@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  * When a password reset is triggered – a token will be created and a special link containing this
- * token will be emailed to the user. //TODO not yet implemented. Email not working yet.
+ * token will be emailed to the user. //not yet implemented. Email not working yet.
  */
 @Entity
 @Data

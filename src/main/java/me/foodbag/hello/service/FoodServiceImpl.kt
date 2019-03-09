@@ -23,7 +23,7 @@ open class FoodServiceImpl : FoodService {
     }
 
     override fun exists(name: String): Boolean {
-        return foodRepository!!.findByName(name) != null
+        return true
     }
 
     override fun save(food: Food): Food {
