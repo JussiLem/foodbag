@@ -21,6 +21,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,13 +48,16 @@ public class UserServiceImpl implements UserService {
   private static final String TOKEN_EXPIRED = "expired";
   private static final String TOKEN_VALID = "valid";
   private static final String ROLE_USER = "ROLE_USER";
+  private static final String QR_PREFIX =
+      "https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=";
+  private static final String APP_NAME = "FoodBagRegistration";
 
   /**
    * Registers a new account. When registered, it will set roles(and privileges). We’re assuming
    * that a standard user is being registered, so the ROLE_USER role is assigned to it. throws
    * Exception if the email exists already. The UserService relies on the UserRepository class to
-   * check if a user with a given email address already exists in the database.
-   * Password is encoded during the user registration process.
+   * check if a user with a given email address already exists in the database. Password is encoded
+   * during the user registration process.
    *
    * @param account
    * @return new user
@@ -67,6 +73,7 @@ public class UserServiceImpl implements UserService {
     user.setLastName(account.getLastName());
     user.setPassword(passwordEncoder.encode(account.getPassword()));
     user.setEmail(account.getEmail());
+    user.setUsing2FA(account.isUsing2FA());
     // Assuming that a standard user is being registered, so the ROLE_USER role is assigned to it.
     user.setRoles(ImmutableSet.of(roleRepository.findByName(ROLE_USER)));
     return userRepository.save(user);
@@ -183,6 +190,29 @@ public class UserServiceImpl implements UserService {
               }
             })
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public String generateQRUrl(User user) throws UnsupportedEncodingException {
+    return QR_PREFIX
+        + URLEncoder.encode(
+            String.format(
+                "otpauth://totp/%s:%s?secret=%s&issuer=%s",
+                APP_NAME, user.getEmail(), user.getSecret(), APP_NAME),
+            StandardCharsets.UTF_8);
+  }
+
+  @Override
+  public User updateUser2FA(boolean use2FA) {
+    final Authentication curAuth = SecurityContextHolder.getContext().getAuthentication();
+    User currentUser = (User) curAuth.getPrincipal();
+    currentUser.setUsing2FA(use2FA);
+    currentUser = userRepository.save(currentUser);
+    final Authentication authentication =
+        new UsernamePasswordAuthenticationToken(
+            currentUser, currentUser.getPassword(), curAuth.getAuthorities());
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    return currentUser;
   }
 
   private boolean emailExists(final String email) {
