@@ -82,7 +82,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/emailError*",
             "/resources/**",
             "/old/user/registration*",
-            "/successRegister*")
+            "/successRegister*",
+                "/webjars/**")
         .permitAll()
         .antMatchers("/invalidSession*")
         .anonymous()
