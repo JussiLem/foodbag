@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   /**
    * Reference to authProvider()
+   *
    * @param auth
    * @throws Exception
    */
@@ -87,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/resources/**",
             "/old/user/registration*",
             "/successRegister*",
-                "/webjars/**")
+            "/webjars/**")
         .permitAll()
         .antMatchers("/invalidSession*")
         .anonymous()
@@ -123,6 +124,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   /**
    * Will encode the password when the user authenticates.
+   *
    * @return
    */
   @Bean

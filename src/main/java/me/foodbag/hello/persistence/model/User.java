@@ -38,6 +38,8 @@ public class User {
    */
   private boolean enabled;
 
+  private boolean isUsing2FA;
+
   /**
    * Save a random secret code for each user to be used later in generating verification code
    */
@@ -60,6 +62,29 @@ public class User {
     super();
     this.secret = Base32.random();
     this.enabled = false;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = (prime * result) + ((email == null) ? 0 : email.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final User user = (User) obj;
+    return email.equals(user.email);
   }
 
   /**

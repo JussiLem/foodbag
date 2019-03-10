@@ -57,6 +57,7 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addViewController("/updatePassword.html");
     registry.addViewController("/changePassword.html");
     registry.addViewController("/badUser.html");
+    registry.addViewController("/registrationCaptcha.html");
   }
 
   @Override
