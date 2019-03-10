@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,8 +37,6 @@ import java.util.stream.Collectors;
 public class RegistrationController {
 
   @Autowired private UserService userService;
-
-
 
   @Autowired private MessageSource messages;
 
@@ -51,8 +50,8 @@ public class RegistrationController {
 
   /**
    * Sign-Up link on the login page will take the user to the <i>registration</i> page. That page is
-   * mapped in this registration controller and is mapped to <i>"/user/registration"</i>.
-   * Mapped to a <b>HTTP POST</b>
+   * mapped in this registration controller and is mapped to <i>"/user/registration"</i>. Mapped to
+   * a <b>HTTP POST</b>
    *
    * @param accountDto
    * @param request
@@ -69,21 +68,23 @@ public class RegistrationController {
     return new GenericResponse("success");
   }
 
-  // Still missing Confirm the registration by a "Confirm Registration" link by email. GET reques will enable
+  // Still missing Confirm the registration by a "Confirm Registration" link by email. GET reques
+  // will enable
   // the User
   @GetMapping(value = "/registrationConfirm")
   public String confirmRegistration(
       final HttpServletRequest request,
       final Model model,
-      @RequestParam("token") final String token) {
+      @RequestParam("token") final String token)
+      throws UnsupportedEncodingException {
     Locale locale = request.getLocale();
     final String result = userService.validateVerificationToken(token);
     if (result.equals("valid")) {
       final User user = userService.getUser(token);
-      // if (user.isUsing2FA()) {
-      // model.addAttribute("qr", userService.generateQRUrl(user));
-      // return "redirect:/qrcode.html?lang=" + locale.getLanguage();
-      // }
+      if (user.isUsing2FA()) {
+        model.addAttribute("qr", userService.generateQRUrl(user));
+        return "redirect:/qrcode.html?lang=" + locale.getLanguage();
+      }
       authWithoutPassword(user);
       model.addAttribute("message", messages.getMessage("message.accountVerified", null, locale));
       return "redirect:/console.html?lang=" + locale.getLanguage();
@@ -102,8 +103,9 @@ public class RegistrationController {
       final HttpServletRequest request, @RequestParam("token") final String existingToken) {
     final VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
     final User user = userService.getUser(newToken.getToken());
-    mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request),
-    request.getLocale(), newToken, user));
+    mailSender.send(
+        constructResendVerificationTokenEmail(
+            getAppUrl(request), request.getLocale(), newToken, user));
     return new GenericResponse(
         messages.getMessage("message.resendToken", null, request.getLocale()));
   }
@@ -116,14 +118,13 @@ public class RegistrationController {
     if (user != null) {
       final String token = UUID.randomUUID().toString();
       userService.createPasswordResetTokenForUser(user, token);
-          mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token,
-       user));
+      mailSender.send(
+          constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
     }
     return new GenericResponse(
         messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
   }
 
-  // not working properly
   @GetMapping(value = "/user/changePassword")
   public String showChangePasswordPage(
       final Locale locale,
@@ -146,7 +147,6 @@ public class RegistrationController {
   }
 
   // change user password
-  //not working properly
   @PostMapping(value = "/user/updatePassword")
   public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
     final User user =
@@ -158,6 +158,16 @@ public class RegistrationController {
     }
     userService.changeUserPassword(user, passwordDto.getNewPassword());
     return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
+  }
+
+  @PostMapping("/user/update/2fa")
+  public GenericResponse modifyUser2FA(@RequestParam("use2FA") final boolean use2FA)
+      throws UnsupportedEncodingException {
+    final User user = userService.updateUser2FA(use2FA);
+    if (use2FA) {
+      return new GenericResponse(userService.generateQRUrl(user));
+    }
+    return null;
   }
 
   private String getAppUrl(HttpServletRequest request) {
@@ -189,13 +199,20 @@ public class RegistrationController {
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
   }
-  private SimpleMailMessage constructResendVerificationTokenEmail(final String contextPath, final Locale locale, final VerificationToken newToken, final User user) {
-    final String confirmationUrl = contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
+
+  private SimpleMailMessage constructResendVerificationTokenEmail(
+      final String contextPath,
+      final Locale locale,
+      final VerificationToken newToken,
+      final User user) {
+    final String confirmationUrl =
+        contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
     final String message = messages.getMessage("message.resendToken", null, locale);
     return constructEmail("Resend Registration Token", message + " \r\n" + confirmationUrl, user);
   }
 
-  private SimpleMailMessage constructResetTokenEmail(final String contextPath, final Locale locale, final String token, final User user) {
+  private SimpleMailMessage constructResetTokenEmail(
+      final String contextPath, final Locale locale, final String token, final User user) {
     final String url = contextPath + "/user/changePassword?id=" + user.getId() + "&token=" + token;
     final String message = messages.getMessage("message.resetPassword", null, locale);
     return constructEmail("Reset Password", message + " \r\n" + url, user);

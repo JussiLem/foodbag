@@ -5,6 +5,7 @@ import me.foodbag.hello.persistence.model.VerificationToken;
 import me.foodbag.hello.web.dto.UserDto;
 import me.foodbag.hello.web.exception.FoodBagException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,4 +50,8 @@ public interface UserService {
   Optional<User> getUserById(long id);
 
   List<String> getUsersFromSessionRegistry();
+
+  String generateQRUrl(User user) throws UnsupportedEncodingException;
+
+  User updateUser2FA(boolean use2FA);
 }
