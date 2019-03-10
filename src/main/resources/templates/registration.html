@@ -4,10 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet"
+<!--    <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+          crossorigin="anonymous"> -->
+    <link rel='stylesheet' href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css"
           integrity="sha256-9w7XtQnqRDvThmsQHfLmXdDbGasYsSjF6FSXrDh7F6g=" crossorigin="anonymous"/>
@@ -74,9 +75,11 @@
     </div>
 </div>
 <!--  jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="webjars/jquery/3.3.1-2/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 
-<script src="https://github.com/ablanco/jquery.pwstrength.bootstrap/blob/master/dist/pwstrength-bootstrap.js"></script>
+<script src="webjars/pwstrength-bootstrap/dist/pwstrength-bootstrap.js"></script>
+<!--<script src="https://github.com/ablanco/jquery.pwstrength.bootstrap/blob/master/dist/pwstrength-bootstrap.js"></script>-->
 <script th:inline="javascript">
     /**
      * If there are validation errors –
@@ -92,7 +95,7 @@
             });
 
             $(":password").keyup(function () {
-                if ($("#password").val() != $("#matchPassword").val()) {
+                if ($("#password").val() !== $("#matchPassword").val()) {
                     $("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
                 } else {
                     $("#globalError").html("").hide();
