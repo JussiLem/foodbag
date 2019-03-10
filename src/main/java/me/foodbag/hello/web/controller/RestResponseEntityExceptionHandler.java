@@ -11,6 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -129,5 +130,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             messages.getMessage("message.error", null, request.getLocale()), "InternalError");
     return new ResponseEntity<>(
         bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  // 500
+  @NotNull
+  @ExceptionHandler({ MailAuthenticationException.class })
+  public ResponseEntity<Object> handleMail(final RuntimeException ex, final WebRequest request) {
+    logger.error("500 Status Code", ex);
+    final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.email.config.error", null, request.getLocale()), "MailError");
+    return new ResponseEntity<>(bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

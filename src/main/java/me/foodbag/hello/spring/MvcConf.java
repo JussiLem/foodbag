@@ -53,6 +53,7 @@ public class MvcConf implements WebMvcConfigurer {
     registry.addViewController("/logout.html");
     registry.addViewController("/emailError.html");
     registry.addViewController("/users.html");
+    registry.addViewController("/forgetPassword.html");
     registry.addViewController("/updatePassword.html");
     registry.addViewController("/changePassword.html");
     registry.addViewController("/badUser.html");
