@@ -17,8 +17,12 @@ public class AuthenticationFailureListener
   @Autowired private LoginAttemptService loginAttemptService;
 
   @Override
-  public void onApplicationEvent(
-      AuthenticationFailureBadCredentialsEvent authenticationFailureBadCredentialsEvent) {
+  public void onApplicationEvent(final AuthenticationFailureBadCredentialsEvent e) {
+    // final WebAuthenticationDetails auth = (WebAuthenticationDetails)
+    // e.getAuthentication().getDetails();
+    // if (auth != null) {
+    // loginAttemptService.loginFailed(auth.getRemoteAddress());
+    // }
     final String xfHeader = request.getHeader("X-Forwarded-For");
     if (xfHeader == null) {
       loginAttemptService.loginFailed(request.getRemoteAddr());

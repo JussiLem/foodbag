@@ -37,6 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired private CustomWebAuthenticationDetailsSource authenticationDetailsSource;
 
+  public SecurityConfig() {
+    super();
+  }
+
   @Bean
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -82,7 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/emailError*",
             "/resources/**",
             "/old/user/registration*",
-            "/successRegister*")
+            "/successRegister*",
+                "/webjars/**")
         .permitAll()
         .antMatchers("/invalidSession*")
         .anonymous()

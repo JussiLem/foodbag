@@ -43,4 +43,6 @@ public class UserDto {
   @NotNull
   @Size(min = 1, message = "{Size.userDto.email}")
   private String email;
+
+  private Integer role;
 }
