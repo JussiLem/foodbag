@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,9 +37,15 @@ public class RegistrationController {
 
   @Autowired private UserService userService;
 
+
+
   @Autowired private MessageSource messages;
 
   @Autowired private ApplicationEventPublisher eventPublisher;
+
+  @Autowired private JavaMailSender mailSender;
+
+  @Autowired private Environment env;
 
   // Registration
 
@@ -93,8 +102,8 @@ public class RegistrationController {
       final HttpServletRequest request, @RequestParam("token") final String existingToken) {
     final VerificationToken newToken = userService.generateNewVerificationToken(existingToken);
     final User user = userService.getUser(newToken.getToken());
-    // mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request),
-    // request.getLocale(), newToken, user));
+    mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request),
+    request.getLocale(), newToken, user));
     return new GenericResponse(
         messages.getMessage("message.resendToken", null, request.getLocale()));
   }
@@ -107,8 +116,8 @@ public class RegistrationController {
     if (user != null) {
       final String token = UUID.randomUUID().toString();
       userService.createPasswordResetTokenForUser(user, token);
-      //    mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token,
-      // user));
+          mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token,
+       user));
     }
     return new GenericResponse(
         messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
@@ -179,5 +188,25 @@ public class RegistrationController {
         new UsernamePasswordAuthenticationToken(user, null, authorities);
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
+  }
+  private SimpleMailMessage constructResendVerificationTokenEmail(final String contextPath, final Locale locale, final VerificationToken newToken, final User user) {
+    final String confirmationUrl = contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
+    final String message = messages.getMessage("message.resendToken", null, locale);
+    return constructEmail("Resend Registration Token", message + " \r\n" + confirmationUrl, user);
+  }
+
+  private SimpleMailMessage constructResetTokenEmail(final String contextPath, final Locale locale, final String token, final User user) {
+    final String url = contextPath + "/user/changePassword?id=" + user.getId() + "&token=" + token;
+    final String message = messages.getMessage("message.resetPassword", null, locale);
+    return constructEmail("Reset Password", message + " \r\n" + url, user);
+  }
+
+  private SimpleMailMessage constructEmail(String subject, String body, User user) {
+    final SimpleMailMessage email = new SimpleMailMessage();
+    email.setSubject(subject);
+    email.setText(body);
+    email.setTo(user.getEmail());
+    email.setFrom(Objects.requireNonNull(env.getProperty("support.email")));
+    return email;
   }
 }
