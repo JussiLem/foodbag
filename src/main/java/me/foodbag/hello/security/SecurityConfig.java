@@ -1,6 +1,7 @@
 package me.foodbag.hello.security;
 
 import me.foodbag.hello.security.authentication.FoodBagAuthenticationProvider;
+import me.foodbag.hello.security.custom.CustomAuthenticationProvider;
 import me.foodbag.hello.security.custom.CustomWebAuthenticationDetailsSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -49,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   /**
    * Reference to authProvider()
+   *
    * @param auth
    * @throws Exception
    */
@@ -87,7 +89,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/resources/**",
             "/old/user/registration*",
             "/successRegister*",
-                "/webjars/**")
+            "/webjars/**",
+            "/qrcode*")
         .permitAll()
         .antMatchers("/invalidSession*")
         .anonymous()
@@ -123,11 +126,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   /**
    * Will encode the password when the user authenticates.
+   *
    * @return
    */
   @Bean
   public DaoAuthenticationProvider authProvider() {
-    final FoodBagAuthenticationProvider authProvider = new FoodBagAuthenticationProvider();
+    final CustomAuthenticationProvider authProvider = new CustomAuthenticationProvider();
     authProvider.setUserDetailsService(userDetailsService);
     authProvider.setPasswordEncoder(passwordEncoder());
     return authProvider;

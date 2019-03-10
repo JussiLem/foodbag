@@ -5,6 +5,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import javax.servlet.http.HttpServletRequest;
 
 public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
+
   private static final long serialVersionUID = 1L;
 
   private final String verificationCode;
@@ -18,13 +19,5 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
     return verificationCode;
   }
 
-  @Override
-  public int hashCode() {
-    return super.hashCode();
-  }
 
-  @Override
-  public boolean equals(Object obj) {
-    return super.equals(obj);
-  }
 }
