@@ -37,6 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired private CustomWebAuthenticationDetailsSource authenticationDetailsSource;
 
+  public SecurityConfig() {
+    super();
+  }
+
   @Bean
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
